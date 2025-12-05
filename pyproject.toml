@@ -1,14 +1,14 @@
 [project]
-name = "wpilib-mcp"
+name = "first-agentic-csa"
 version = "0.1.0"
-description = "Plugin-based WPILib documentation agent as an MCP server"
+description = "Plugin-based FRC documentation agent as an MCP server for WPILib and vendor libraries"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "BSD-3-Clause" }
 authors = [
-    { name = "WPILib MCP Contributors" }
+    { name = "Rami Mouro" }
 ]
-keywords = ["mcp", "wpilib", "frc", "robotics", "documentation"]
+keywords = ["mcp", "wpilib", "frc", "robotics", "documentation", "first", "csa"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -32,7 +32,7 @@ dev = [
 ]
 
 [project.scripts]
-wpilib-mcp = "wpilib_mcp.server:main"
+first-agentic-csa = "wpilib_mcp.server:main"
 
 [build-system]
 requires = ["hatchling"]

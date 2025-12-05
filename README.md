@@ -1,6 +1,6 @@
-# WPILib MCP Server
+# FIRST Agentic CSA
 
-A plugin-based FRC documentation agent implemented as a Model Context Protocol (MCP) server. Search across WPILib and vendor documentation (REV, CTRE, Redux) using natural language queries.
+A plugin-based FRC documentation agent implemented as a Model Context Protocol (MCP) server. Search across WPILib and vendor documentation (REV, CTRE, Redux, PhotonVision) using natural language queries. Built for FIRST Robotics Competition teams and CSAs (Control System Advisors).
 
 ## Features
 
@@ -17,10 +17,10 @@ A plugin-based FRC documentation agent implemented as a Model Context Protocol (
 
 ```bash
 # Using uvx (recommended)
-uvx wpilib-mcp
+uvx first-agentic-csa
 
 # Or with pip
-pip install wpilib-mcp
+pip install first-agentic-csa
 ```
 
 ### From Source
@@ -41,8 +41,8 @@ If you want to modify or contribute to the project:
 
 2. **Clone and install:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/wpilib-mcp.git
-   cd wpilib-mcp
+   git clone https://github.com/YOUR_USERNAME/first-agentic-csa.git
+   cd first-agentic-csa
    uv sync
    ```
 
@@ -52,7 +52,7 @@ If you want to modify or contribute to the project:
 
 ```bash
 # With uv
-uv run wpilib-mcp
+uv run first-agentic-csa
 
 # Or directly
 python -m wpilib_mcp.server
@@ -65,9 +65,9 @@ Add to your MCP configuration (`claude_desktop_config.json` or Cursor settings):
 ```json
 {
   "mcpServers": {
-    "wpilib": {
+    "frc-docs": {
       "command": "uvx",
-      "args": ["wpilib-mcp"]
+      "args": ["first-agentic-csa"]
     }
   }
 }
@@ -77,9 +77,9 @@ If running from source:
 ```json
 {
   "mcpServers": {
-    "wpilib": {
+    "frc-docs": {
       "command": "uv",
-      "args": ["--directory", "/path/to/wpilib-mcp", "run", "wpilib-mcp"]
+      "args": ["--directory", "/path/to/first-agentic-csa", "run", "first-agentic-csa"]
     }
   }
 }

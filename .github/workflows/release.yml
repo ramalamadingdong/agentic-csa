@@ -104,10 +104,10 @@ jobs:
           
           \`\`\`bash
           # Using uvx (recommended)
-          uvx wpilib-mcp
+          uvx first-agentic-csa
           
           # Or with pip
-          pip install wpilib-mcp==${{ steps.new_version.outputs.version }}
+          pip install first-agentic-csa==${{ steps.new_version.outputs.version }}
           \`\`\`
           
           ## MCP Configuration
@@ -115,9 +115,9 @@ jobs:
           \`\`\`json
           {
             "mcpServers": {
-              "wpilib": {
+              "frc-docs": {
                 "command": "uvx",
-                "args": ["wpilib-mcp"]
+                "args": ["first-agentic-csa"]
               }
             }
           }
