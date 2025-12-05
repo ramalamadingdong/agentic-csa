@@ -1,0 +1,88 @@
+{
+  "vendor": "rev",
+  "version": "latest",
+  "built_at": "2025-01-15T00:00:00Z",
+  "pages": [
+    {
+      "url": "https://docs.revrobotics.com/brushless/spark-max/overview",
+      "title": "SPARK MAX Overview",
+      "section": "SPARK MAX",
+      "language": "All",
+      "content": "The SPARK MAX Motor Controller is a brushless DC motor controller designed for use in the FIRST Robotics Competition. It can control both brushless (NEO, NEO 550) and brushed motors. Features include integrated encoder support, smart motion profiling, and CAN bus communication. The SPARK MAX supports REVLib for Java and C++ programming. It has built-in current limiting, temperature monitoring, and can run in various control modes including percent output, velocity, position, and voltage.",
+      "content_preview": "The SPARK MAX Motor Controller is a brushless DC motor controller designed for use in FIRST Robotics Competition..."
+    },
+    {
+      "url": "https://docs.revrobotics.com/brushless/spark-max/software-resources/configuration-parameters",
+      "title": "SPARK MAX Configuration Parameters",
+      "section": "SPARK MAX",
+      "language": "All",
+      "content": "SPARK MAX configuration parameters control motor behavior. Key parameters include: Motor Type (brushless/brushed), Idle Mode (brake/coast), Current Limits (smart current limit, secondary limit), Encoder Settings (counts per revolution, position/velocity conversion factors), PID Gains (kP, kI, kD, kF for each slot), and Ramp Rates (open/closed loop). Parameters can be set via REV Hardware Client, CANSparkMax API, or restored to factory defaults. Always burn flash after configuration changes.",
+      "content_preview": "SPARK MAX configuration parameters control motor behavior. Key parameters include Motor Type, Idle Mode, Current Limits..."
+    },
+    {
+      "url": "https://docs.revrobotics.com/brushless/spark-max/software-resources/revlib",
+      "title": "REVLib Overview",
+      "section": "SPARK MAX",
+      "language": "Java",
+      "content": "REVLib is the software library for controlling REV motor controllers in FRC. Install via the REV vendor library in WPILib VS Code. The main class is CANSparkMax for SPARK MAX controllers. Create with CAN ID and motor type. Use set() for percent output, setVoltage() for voltage control. Get encoder with getEncoder(). Configure PID with getPIDController(). CANSparkFlex is used for SPARK Flex controllers. Always configure and burn flash before running.",
+      "content_preview": "REVLib is the software library for controlling REV motor controllers in FRC. Install via the REV vendor library in WPILib VS Code..."
+    },
+    {
+      "url": "https://docs.revrobotics.com/brushless/spark-max/software-resources/closed-loop-control",
+      "title": "SPARK MAX Closed Loop Control",
+      "section": "SPARK MAX",
+      "language": "Java",
+      "content": "SPARK MAX supports onboard closed-loop control including position, velocity, and Smart Motion modes. Use SparkMaxPIDController to configure gains. setP(), setI(), setD(), setFF() set PID and feedforward gains. setReference() commands the target with control type. Smart Motion provides trapezoidal profiling - set max velocity and acceleration with setSmartMotionMaxVelocity() and setSmartMotionMaxAccel(). Onboard PID reduces CAN bus traffic and improves response time compared to roboRIO-side control.",
+      "content_preview": "SPARK MAX supports onboard closed-loop control including position, velocity, and Smart Motion modes..."
+    },
+    {
+      "url": "https://docs.revrobotics.com/brushless/spark-max/software-resources/absolute-encoder",
+      "title": "SPARK MAX Absolute Encoder",
+      "section": "SPARK MAX",
+      "language": "Java",
+      "content": "SPARK MAX supports absolute encoders via the data port for mechanisms requiring absolute position without homing. Use getAbsoluteEncoder() with encoder type (duty cycle or analog). Configure zero offset with setZeroOffset(). Set position and velocity conversion factors for meaningful units. Absolute encoders maintain position through power cycles. Common options include REV Through Bore Encoder and third-party duty cycle encoders. Wire to the SPARK MAX data port.",
+      "content_preview": "SPARK MAX supports absolute encoders via the data port for mechanisms requiring absolute position without homing..."
+    },
+    {
+      "url": "https://docs.revrobotics.com/brushless/spark-flex/overview",
+      "title": "SPARK Flex Overview",
+      "section": "SPARK Flex",
+      "language": "All",
+      "content": "SPARK Flex is REV's latest brushless motor controller with higher current capacity than SPARK MAX. Designed for NEO Vortex and high-current applications. Features 60A continuous / 100A peak current, integrated data port for encoders, and USB-C configuration. Controlled using CANSparkFlex class in REVLib (same API as CANSparkMax). Supports all SPARK MAX control modes plus enhanced Smart Motion. Includes hardware-level safety features and improved thermal management.",
+      "content_preview": "SPARK Flex is REV's latest brushless motor controller with higher current capacity than SPARK MAX..."
+    },
+    {
+      "url": "https://docs.revrobotics.com/brushless/neo/neo-motor",
+      "title": "NEO Brushless Motor",
+      "section": "Motors",
+      "language": "All",
+      "content": "The NEO Brushless Motor is designed for FRC with high power density. Specs: 12V nominal, free speed 5676 RPM, stall torque 2.6 Nm, stall current 105A, peak power 406W. Built-in Hall-effect sensors provide commutation and position feedback. Use with SPARK MAX or SPARK Flex controllers. The integrated encoder has 42 counts per revolution. NEO is ideal for drivetrains, arms, and shooter wheels. NEO 550 is smaller variant for lower-torque applications.",
+      "content_preview": "The NEO Brushless Motor is designed for FRC with high power density. Specs: 12V nominal, free speed 5676 RPM..."
+    },
+    {
+      "url": "https://docs.revrobotics.com/brushless/neo/neo-vortex",
+      "title": "NEO Vortex Motor",
+      "section": "Motors",
+      "language": "All",
+      "content": "NEO Vortex is REV's high-performance brushless motor for demanding applications. Higher torque and power than standard NEO. Specs: free speed 6784 RPM, stall torque 3.6 Nm, peak power 640W. Designed to pair with SPARK Flex for maximum performance. Features improved thermal characteristics and integrated encoder. Ideal for shooter wheels, high-speed intakes, and competition drivetrains. Requires proper current limiting and thermal management for sustained operation.",
+      "content_preview": "NEO Vortex is REV's high-performance brushless motor for demanding applications. Higher torque and power than standard NEO..."
+    },
+    {
+      "url": "https://docs.revrobotics.com/through-bore-encoder/overview",
+      "title": "REV Through Bore Encoder",
+      "section": "Sensors",
+      "language": "All",
+      "content": "The REV Through Bore Encoder provides absolute and incremental position feedback. Hollow shaft design allows mounting on mechanism axles. Outputs both absolute position (duty cycle) and quadrature incremental pulses. 8192 counts per revolution for incremental mode. Connect to SPARK MAX data port for absolute position or roboRIO DIO for quadrature. Useful for arms, turrets, and swerve steering. Index pulse provides homing reference. IP50 rated for dust protection.",
+      "content_preview": "The REV Through Bore Encoder provides absolute and incremental position feedback. Hollow shaft design allows mounting on mechanism axles..."
+    },
+    {
+      "url": "https://docs.revrobotics.com/rev-hardware-client/getting-started",
+      "title": "REV Hardware Client",
+      "section": "Tools",
+      "language": "All",
+      "content": "REV Hardware Client is the desktop application for configuring and updating REV devices. Connect SPARK MAX/Flex via USB-C. Features include: firmware updates, parameter configuration, real-time telemetry, and motor testing. Set CAN ID, configure current limits, tune PID gains, and test motors directly. Export and import configurations for backup. Essential for initial setup and troubleshooting. Run before deploying robot code to ensure proper configuration.",
+      "content_preview": "REV Hardware Client is the desktop application for configuring and updating REV devices. Connect SPARK MAX/Flex via USB-C..."
+    }
+  ]
+}
+

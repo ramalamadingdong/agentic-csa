@@ -1,0 +1,88 @@
+{
+  "vendor": "ctre",
+  "version": "phoenix6",
+  "built_at": "2025-01-15T00:00:00Z",
+  "pages": [
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/hardware-reference/talonfx/index.html",
+      "title": "TalonFX Overview",
+      "section": "TalonFX",
+      "language": "All",
+      "content": "TalonFX is CTRE's integrated motor controller with Falcon 500 or Kraken X60 motors. Features include Field Oriented Control (FOC), integrated encoder, and advanced motion control. Phoenix 6 software provides improved API with units support and device configuration. TalonFX supports multiple control modes: DutyCycleOut, VoltageOut, TorqueCurrentFOC, PositionVoltage, VelocityVoltage, MotionMagicVoltage. The integrated encoder provides 2048 counts per revolution for precise feedback.",
+      "content_preview": "TalonFX is CTRE's integrated motor controller with Falcon 500 or Kraken X60 motors. Features include Field Oriented Control (FOC)..."
+    },
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/api-reference/device-specific/talonfx/index.html",
+      "title": "TalonFX API Reference",
+      "section": "TalonFX",
+      "language": "Java",
+      "content": "Create TalonFX with device ID: new TalonFX(deviceId). Configure using TalonFXConfiguration object with Configurator.apply(). Control modes use request objects: DutyCycleOut, VoltageOut, PositionVoltage, VelocityVoltage, MotionMagicVoltage. Use setControl() to apply requests. Get feedback with getPosition(), getVelocity(), getMotorVoltage(). Status signals update automatically. Configure slot gains for closed-loop control in configuration object.",
+      "content_preview": "Create TalonFX with device ID: new TalonFX(deviceId). Configure using TalonFXConfiguration object..."
+    },
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/api-reference/device-specific/talonfx/closed-loop-requests.html",
+      "title": "TalonFX Closed Loop Control",
+      "section": "TalonFX",
+      "language": "Java",
+      "content": "Phoenix 6 closed-loop control uses request objects. PositionVoltage for position control, VelocityVoltage for velocity. Configure gains in TalonFXConfiguration Slot0 (or Slot1, Slot2). Set kP, kI, kD, kS, kV, kA, kG gains. kS is static friction, kV is velocity feedforward, kA is acceleration feedforward, kG is gravity. Use withPosition() or withVelocity() to set target. Closed-loop runs on device at 1kHz for optimal performance.",
+      "content_preview": "Phoenix 6 closed-loop control uses request objects. PositionVoltage for position control, VelocityVoltage for velocity..."
+    },
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/api-reference/device-specific/talonfx/motion-magic.html",
+      "title": "TalonFX Motion Magic",
+      "section": "TalonFX",
+      "language": "Java",
+      "content": "Motion Magic provides smooth trapezoidal motion profiling for position control. Configure in TalonFXConfiguration: MotionMagicCruiseVelocity, MotionMagicAcceleration, MotionMagicJerk. Use MotionMagicVoltage request for position targets. The device generates smooth profiles automatically. Motion Magic Expo variant uses exponential profile instead of trapezoidal. Profile is recalculated on-device when target changes. Combine with feedforward for best results.",
+      "content_preview": "Motion Magic provides smooth trapezoidal motion profiling for position control. Configure in TalonFXConfiguration..."
+    },
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/hardware-reference/cancoder/index.html",
+      "title": "CANcoder Overview",
+      "section": "CANcoder",
+      "language": "All",
+      "content": "CANcoder is CTRE's magnetic absolute encoder for FRC. Provides 4096 counts per revolution absolute position. Communicates over CAN bus for easy integration. Common uses: swerve module steering, arm absolute position, turret tracking. Features include: configurable sensor direction, magnet offset for zeroing, and boot-to-absolute position. In Phoenix 6, use CANcoder class with getAbsolutePosition() and getPosition() for continuous position.",
+      "content_preview": "CANcoder is CTRE's magnetic absolute encoder for FRC. Provides 4096 counts per revolution absolute position..."
+    },
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/hardware-reference/pigeon2/index.html",
+      "title": "Pigeon 2 IMU Overview",
+      "section": "Pigeon 2",
+      "language": "All",
+      "content": "Pigeon 2 is CTRE's 9-axis IMU (gyro + accelerometer + magnetometer) for FRC. Provides yaw, pitch, roll angles and angular velocities. Features fast update rate, temperature compensation, and gravity vector. Mount rigidly on robot frame. In Phoenix 6, use Pigeon2 class with getYaw(), getPitch(), getRoll(). Use setYaw() to zero heading. Supports simulation and fused heading with CANcoder for swerve odometry.",
+      "content_preview": "Pigeon 2 is CTRE's 9-axis IMU (gyro + accelerometer + magnetometer) for FRC. Provides yaw, pitch, roll angles..."
+    },
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/application-notes/current-limiting.html",
+      "title": "Current Limiting",
+      "section": "Application Notes",
+      "language": "All",
+      "content": "Current limiting protects motors and electronics from damage. Phoenix 6 TalonFX supports supply and stator current limits. Supply limit caps battery current draw (sum of motor current divided by duty cycle). Stator limit caps motor current directly. Configure in TalonFXConfiguration CurrentLimits: SupplyCurrentLimit, SupplyCurrentLimitEnable, StatorCurrentLimit, StatorCurrentLimitEnable. Stator limiting provides better torque control. Set appropriate thresholds based on motor specs.",
+      "content_preview": "Current limiting protects motors and electronics from damage. Phoenix 6 TalonFX supports supply and stator current limits..."
+    },
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/api-reference/mechanisms/swerve/index.html",
+      "title": "Swerve Drive with Phoenix 6",
+      "section": "Mechanisms",
+      "language": "Java",
+      "content": "Phoenix 6 includes swerve drive support with SwerveDrivetrain class. Configure modules with SwerveModuleConstants. Use TalonFX for drive and steer motors, CANcoder for absolute steering position. SwerveDrivetrain handles kinematics, odometry, and control. Apply ChassisSpeeds with setControl(). Supports field-centric and robot-centric driving. SwerveRequest objects define control modes. Use Phoenix 6 Tuner X swerve generator for easy setup.",
+      "content_preview": "Phoenix 6 includes swerve drive support with SwerveDrivetrain class. Configure modules with SwerveModuleConstants..."
+    },
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/tuner/index.html",
+      "title": "Phoenix Tuner X",
+      "section": "Tools",
+      "language": "All",
+      "content": "Phoenix Tuner X is CTRE's configuration and diagnostic tool. Features: device configuration, firmware updates, self-test, and real-time plotting. Connect via USB or network. Configure device settings, current limits, and PID gains. Plot and tune mechanism response. Export/import configurations. Self-test verifies device health. Supports TalonFX, CANcoder, Pigeon 2, and other CTRE devices. Essential for initial setup and troubleshooting.",
+      "content_preview": "Phoenix Tuner X is CTRE's configuration and diagnostic tool. Features: device configuration, firmware updates, self-test..."
+    },
+    {
+      "url": "https://v6.docs.ctr-electronics.com/en/stable/docs/hardware-reference/kraken/index.html",
+      "title": "Kraken X60 Overview",
+      "section": "Motors",
+      "language": "All",
+      "content": "Kraken X60 is CTRE's high-performance brushless motor with integrated TalonFX controller. Superior power density and thermal performance vs Falcon 500. Specs: free speed 6000 RPM, peak power 1.2 kW. Uses same TalonFX API and Phoenix 6 software. Features integrated absolute encoder, FOC support, and Motion Magic. Recommended for drivetrain, arm, and high-load mechanisms. Requires proper current limiting for optimal longevity.",
+      "content_preview": "Kraken X60 is CTRE's high-performance brushless motor with integrated TalonFX controller. Superior power density..."
+    }
+  ]
+}
+

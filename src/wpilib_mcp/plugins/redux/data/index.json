@@ -1,0 +1,48 @@
+{
+  "vendor": "redux",
+  "version": "latest",
+  "built_at": "2025-01-15T00:00:00Z",
+  "pages": [
+    {
+      "url": "https://docs.reduxrobotics.com/canandcoder/",
+      "title": "Canandcoder Overview",
+      "section": "Canandcoder",
+      "language": "All",
+      "content": "The Canandcoder is Redux Robotics' magnetic absolute encoder with CAN bus connectivity. It provides high-resolution absolute position feedback for mechanisms like swerve steering, arms, and turrets. Features include 14-bit resolution, 100Hz update rate, configurable zero offset, and velocity measurement. Communicates over CAN FD for low latency. The compact design fits in tight spaces. Use with ReduxLib in WPILib for easy integration.",
+      "content_preview": "The Canandcoder is Redux Robotics' magnetic absolute encoder with CAN bus connectivity. It provides high-resolution absolute position feedback..."
+    },
+    {
+      "url": "https://docs.reduxrobotics.com/canandcoder/software/",
+      "title": "Canandcoder Software Guide",
+      "section": "Canandcoder",
+      "language": "Java",
+      "content": "Install ReduxLib via the Redux vendor library in WPILib. Create a Canandcoder object with CAN ID. Use getAbsolutePosition() for 0-1 rotation, getPosition() for continuous rotations. Configure zero offset with setAbsoluteOffset(). Set position frame period with setPositionFramePeriod() for update rate. Velocity available via getVelocity(). Configure settings in code or use Redux Hardware Client. Remember to reset after configuration changes.",
+      "content_preview": "Install ReduxLib via the Redux vendor library in WPILib. Create a Canandcoder object with CAN ID..."
+    },
+    {
+      "url": "https://docs.reduxrobotics.com/canandgyro/",
+      "title": "Canandgyro Overview",
+      "section": "Canandgyro",
+      "language": "All",
+      "content": "The Canandgyro is Redux Robotics' CAN-connected IMU providing yaw, pitch, and roll measurements. Features include high update rate, temperature compensation, and gravity vector output. Uses CAN FD for fast, reliable communication. Ideal for drivetrain heading control and mechanism angle tracking. Compact form factor for easy mounting. Integrates seamlessly with WPILib and PathPlanner. Use setYaw() to zero heading on robot enable.",
+      "content_preview": "The Canandgyro is Redux Robotics' CAN-connected IMU providing yaw, pitch, and roll measurements..."
+    },
+    {
+      "url": "https://docs.reduxrobotics.com/canandgyro/software/",
+      "title": "Canandgyro Software Guide",
+      "section": "Canandgyro",
+      "language": "Java",
+      "content": "Create Canandgyro with CAN ID. Get heading with getYaw() in degrees. Use getPitch() and getRoll() for tilt angles. Angular velocities available via getAngularVelocityYaw() etc. Reset heading with setYaw(0). Configure update rates with setYawFramePeriod(). The gyro implements WPILib Gyro interface for compatibility with existing code. Use with swerve odometry for field position tracking. Supports simulation mode for testing.",
+      "content_preview": "Create Canandgyro with CAN ID. Get heading with getYaw() in degrees. Use getPitch() and getRoll() for tilt angles..."
+    },
+    {
+      "url": "https://docs.reduxrobotics.com/reduxlib/",
+      "title": "ReduxLib Overview",
+      "section": "ReduxLib",
+      "language": "Java",
+      "content": "ReduxLib is the software library for Redux Robotics devices. Install as a WPILib vendor dependency. Main classes: Canandcoder for absolute encoders, Canandgyro for IMU. Configure devices programmatically or via Redux Hardware Client. ReduxLib supports both CAN and CAN FD communication. Includes simulation support for unit testing. Updates available through vendor library manager. Compatible with WPILib 2024+.",
+      "content_preview": "ReduxLib is the software library for Redux Robotics devices. Install as a WPILib vendor dependency..."
+    }
+  ]
+}
+

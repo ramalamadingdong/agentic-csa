@@ -1,0 +1,31 @@
+{
+  "plugins": {
+    "wpilib": {
+      "enabled": true,
+      "versions": ["2025"],
+      "languages": ["Java", "Python", "C++"]
+    },
+    "rev": {
+      "enabled": true,
+      "languages": ["Java", "C++"]
+    },
+    "ctre": {
+      "enabled": false,
+      "languages": ["Java", "C++"]
+    },
+    "redux": {
+      "enabled": false,
+      "languages": ["Java"]
+    }
+  },
+  "cache": {
+    "ttl_seconds": 3600,
+    "max_size_mb": 100
+  },
+  "search": {
+    "default_max_results": 10,
+    "default_language": "Java",
+    "default_version": "2025"
+  }
+}
+

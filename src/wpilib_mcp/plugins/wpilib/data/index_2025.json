@@ -1,0 +1,168 @@
+{
+  "vendor": "wpilib",
+  "version": "2025",
+  "built_at": "2025-01-15T00:00:00Z",
+  "pages": [
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/commandbased/commands.html",
+      "title": "Commands",
+      "section": "Command-Based Programming",
+      "language": "Java",
+      "content": "Commands represent actions the robot can take. Commands run when scheduled, and end when their isFinished method returns true or when interrupted. Commands can require subsystems, which prevents multiple commands from using the same hardware simultaneously. The Command interface has several methods: initialize() runs once when the command starts, execute() runs repeatedly while the command is active, end(interrupted) runs once when the command finishes, isFinished() returns true when the command should end, and getRequirements() returns the subsystems used by this command.",
+      "content_preview": "Commands represent actions the robot can take. Commands run when scheduled, and end when their isFinished method returns true or when interrupted..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/commandbased/subsystems.html",
+      "title": "Subsystems",
+      "section": "Command-Based Programming",
+      "language": "Java",
+      "content": "Subsystems are the basic unit of robot organization in the command-based paradigm. A subsystem represents an independently-controllable collection of robot hardware, like a drivetrain, elevator, or intake. Subsystems have a periodic() method that runs every scheduler loop, and a default command that runs whenever no other command is using the subsystem. Only one command can use a given subsystem at a time, which prevents conflicts and race conditions.",
+      "content_preview": "Subsystems are the basic unit of robot organization in the command-based paradigm. A subsystem represents an independently-controllable collection of robot hardware..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/commandbased/command-scheduler.html",
+      "title": "The Command Scheduler",
+      "section": "Command-Based Programming",
+      "language": "Java",
+      "content": "The CommandScheduler is the class responsible for running commands. It maintains a list of currently-running commands, and handles their lifecycle. The scheduler should be run once per robot loop by calling CommandScheduler.getInstance().run(). Commands are scheduled using the schedule() method, and can be cancelled using cancel(). The scheduler also handles command requirements, ensuring only one command uses each subsystem at a time.",
+      "content_preview": "The CommandScheduler is the class responsible for running commands. It maintains a list of currently-running commands, and handles their lifecycle..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html",
+      "title": "Binding Commands to Triggers",
+      "section": "Command-Based Programming",
+      "language": "Java",
+      "content": "Triggers are a way to bind commands to arbitrary boolean conditions. The most common use is binding commands to joystick buttons. Trigger objects have methods like onTrue(), onFalse(), whileTrue(), and toggleOnTrue() that schedule commands when the trigger condition changes. JoystickButton is a trigger that activates when a joystick button is pressed. You can also create custom triggers from arbitrary boolean suppliers.",
+      "content_preview": "Triggers are a way to bind commands to arbitrary boolean conditions. The most common use is binding commands to joystick buttons..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/commandbased/pid-subsystems-commands.html",
+      "title": "PID Control through PIDSubsystems and PIDCommands",
+      "section": "Command-Based Programming",
+      "language": "Java",
+      "content": "WPILib provides PIDSubsystem and PIDCommand convenience classes for integrating PID control into the command framework. PIDSubsystem is a subsystem that uses a PIDController to control output. It has abstract methods getMeasurement() and useOutput() that you implement. PIDCommand is similar but as a command. Both handle the PID loop automatically, you just provide the measurement and output handling.",
+      "content_preview": "WPILib provides PIDSubsystem and PIDCommand convenience classes for integrating PID control into the command framework..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/pidcontroller.html",
+      "title": "PID Controller",
+      "section": "Advanced Controls",
+      "language": "Java",
+      "content": "A PID controller continuously calculates an error value as the difference between a setpoint and a measured process variable. The controller attempts to minimize the error by adjusting the process control inputs. WPILib's PIDController class implements a PID control loop. Constructor takes kP, kI, and kD gains. Use calculate(measurement, setpoint) to get the output. The controller can be configured with setTolerance() for checking if at setpoint, and enableContinuousInput() for wrapping inputs like angles.",
+      "content_preview": "A PID controller continuously calculates an error value as the difference between a setpoint and a measured process variable..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/advanced-controls/controllers/feedforward.html",
+      "title": "Feedforward Control",
+      "section": "Advanced Controls",
+      "language": "Java",
+      "content": "Feedforward control uses knowledge of the system to predict the required control effort. Unlike feedback control, feedforward doesn't use sensor measurements. WPILib provides SimpleMotorFeedforward for velocity control of simple mechanisms, ArmFeedforward for arms affected by gravity, and ElevatorFeedforward for elevators. These classes calculate the voltage needed to achieve a desired velocity and acceleration. Combine feedforward with PID for best results.",
+      "content_preview": "Feedforward control uses knowledge of the system to predict the required control effort. Unlike feedback control, feedforward doesn't use sensor measurements..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/hardware-apis/motors/pwm-motors.html",
+      "title": "PWM Motor Controllers",
+      "section": "Hardware APIs",
+      "language": "Java",
+      "content": "PWM motor controllers receive a pulse-width modulated signal to control motor speed and direction. WPILib supports many PWM controllers including Spark, VictorSP, and Talon. Create a controller object with the PWM port number. Use set() with values from -1.0 to 1.0 to control speed and direction. PWM controllers are simple but provide no feedback - for advanced control, use CAN-based controllers from vendors like REV and CTRE.",
+      "content_preview": "PWM motor controllers receive a pulse-width modulated signal to control motor speed and direction. WPILib supports many PWM controllers..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/hardware-apis/sensors/encoders-software.html",
+      "title": "Encoders - Software",
+      "section": "Hardware APIs",
+      "language": "Java",
+      "content": "Encoders measure rotational position and velocity of mechanisms. WPILib's Encoder class works with quadrature encoders connected to the roboRIO DIO ports. Create an Encoder with two DIO channel numbers. Use get() for raw counts, getDistance() for scaled distance, getRate() for velocity. Call setDistancePerPulse() to convert counts to meaningful units. Reset position with reset(). Encoders are essential for closed-loop control of mechanisms.",
+      "content_preview": "Encoders measure rotational position and velocity of mechanisms. WPILib's Encoder class works with quadrature encoders connected to the roboRIO DIO ports..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/hardware-apis/sensors/gyros-software.html",
+      "title": "Gyroscopes - Software",
+      "section": "Hardware APIs",
+      "language": "Java",
+      "content": "Gyroscopes measure rotational rate and can integrate to measure angle. WPILib supports several gyros including the ADXRS450_Gyro (included in the Kit of Parts) and navX. The Gyro interface provides getAngle() for cumulative rotation and getRate() for rotation rate. Use reset() to zero the angle. Gyros are essential for autonomous driving and maintaining heading during teleop. The navX provides additional features like pitch, roll, and acceleration.",
+      "content_preview": "Gyroscopes measure rotational rate and can integrate to measure angle. WPILib supports several gyros including the ADXRS450_Gyro..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/differential-drive-kinematics.html",
+      "title": "Differential Drive Kinematics",
+      "section": "Kinematics and Odometry",
+      "language": "Java",
+      "content": "Differential drive kinematics converts between robot velocity and wheel velocities. WPILib's DifferentialDriveKinematics class handles this conversion. Create with track width (distance between wheels). Use toWheelSpeeds() to convert a ChassisSpeeds (linear and angular velocity) to left/right wheel speeds. Use toChassisSpeeds() for the reverse. This is essential for path following and autonomous driving on tank-style drivetrains.",
+      "content_preview": "Differential drive kinematics converts between robot velocity and wheel velocities. WPILib's DifferentialDriveKinematics class handles this conversion..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/differential-drive-odometry.html",
+      "title": "Differential Drive Odometry",
+      "section": "Kinematics and Odometry",
+      "language": "Java",
+      "content": "Odometry tracks robot position on the field using encoder and gyro measurements. WPILib's DifferentialDriveOdometry class estimates robot pose (x, y, heading). Create with initial pose and gyro angle. Call update() each loop with gyro angle and left/right encoder distances. Use getPoseMeters() to get current estimated position. Odometry drifts over time, so use vision or other absolute positioning to periodically correct it.",
+      "content_preview": "Odometry tracks robot position on the field using encoder and gyro measurements. WPILib's DifferentialDriveOdometry class estimates robot pose..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-kinematics.html",
+      "title": "Swerve Drive Kinematics",
+      "section": "Kinematics and Odometry",
+      "language": "Java",
+      "content": "Swerve drive kinematics handles the complex math for swerve drivetrains where each wheel can rotate independently. WPILib's SwerveDriveKinematics class is created with Translation2d objects representing each module's position relative to robot center. Use toSwerveModuleStates() to convert ChassisSpeeds to individual module states (speed and angle). Supports 4 or more modules. Essential for field-centric driving and path following with swerve.",
+      "content_preview": "Swerve drive kinematics handles the complex math for swerve drivetrains where each wheel can rotate independently..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/pathplanning/trajectory-generation.html",
+      "title": "Trajectory Generation",
+      "section": "Path Planning",
+      "language": "Java",
+      "content": "Trajectories define a path through space over time, including position, velocity, and acceleration at each point. WPILib's TrajectoryGenerator creates smooth trajectories through waypoints. Use generateTrajectory() with start pose, interior waypoints, end pose, and TrajectoryConfig (max velocity, acceleration, constraints). The result is a Trajectory that can be sampled at any time to get the desired state. Use with RamseteController for path following.",
+      "content_preview": "Trajectories define a path through space over time, including position, velocity, and acceleration at each point..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/pathplanning/ramsete-controller.html",
+      "title": "Ramsete Controller",
+      "section": "Path Planning",
+      "language": "Java",
+      "content": "The Ramsete controller is a trajectory tracker for non-holonomic (differential drive) robots. It takes the current robot pose and desired trajectory state, and outputs chassis speeds to track the trajectory. WPILib's RamseteController is created with tuning parameters b and zeta. Use calculate() with current pose and desired state to get ChassisSpeeds. Combine with DifferentialDriveKinematics to get wheel speeds. Works with RamseteCommand for easy integration.",
+      "content_preview": "The Ramsete controller is a trajectory tracker for non-holonomic (differential drive) robots. It takes the current robot pose and desired trajectory state..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/networktables/networktables-intro.html",
+      "title": "NetworkTables Introduction",
+      "section": "NetworkTables",
+      "language": "Java",
+      "content": "NetworkTables is WPILib's system for sharing data between robot code, dashboard, and coprocessors. It's a distributed key-value store that synchronizes automatically over the network. Use NetworkTableInstance.getDefault() to get the singleton instance. Get or create tables with getTable(). Tables contain entries of various types. SmartDashboard and Shuffleboard use NetworkTables internally. Great for debugging, tuning, and vision processing data.",
+      "content_preview": "NetworkTables is WPILib's system for sharing data between robot code, dashboard, and coprocessors. It's a distributed key-value store..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/vision-processing/introduction-to-vision.html",
+      "title": "Introduction to Vision Processing",
+      "section": "Vision Processing",
+      "language": "All",
+      "content": "Vision processing lets robots detect and track game pieces, targets, and AprilTags. WPILib supports on-roboRIO processing with CameraServer, but coprocessors (Raspberry Pi, Limelight, PhotonVision) are recommended for performance. AprilTags provide accurate pose estimation. PhotonVision and Limelight are popular solutions that handle detection and send results to robot code via NetworkTables. Use vision data for auto-aim, alignment, and autonomous navigation.",
+      "content_preview": "Vision processing lets robots detect and track game pieces, targets, and AprilTags. WPILib supports on-roboRIO processing..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/can-devices/can-addressing.html",
+      "title": "CAN Addressing",
+      "section": "CAN Devices",
+      "language": "All",
+      "content": "The CAN bus connects devices like motor controllers, sensors, and the PDP/PDH to the roboRIO. Each device needs a unique CAN ID (typically 0-62). Configure IDs using vendor tools like REV Hardware Client or Phoenix Tuner X. Common convention: drivetrain motors 1-4, arm/elevator 5-8, intake 9+. The PDP/PDH is typically ID 1. Proper addressing prevents bus conflicts and makes code more maintainable.",
+      "content_preview": "The CAN bus connects devices like motor controllers, sensors, and the PDP/PDH to the roboRIO. Each device needs a unique CAN ID..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/basic-programming/robot-structure.html",
+      "title": "Robot Program Structure",
+      "section": "Basic Programming",
+      "language": "Java",
+      "content": "FRC robot programs extend a base robot class that defines the program structure. TimedRobot is the most common, running periodic methods at 50Hz. robotInit() runs once on startup, robotPeriodic() runs every loop. Each mode (autonomous, teleop, disabled, test) has Init and Periodic methods. For command-based robots, use commands and triggers instead of putting logic directly in periodic methods. RobotContainer typically holds subsystems and configures bindings.",
+      "content_preview": "FRC robot programs extend a base robot class that defines the program structure. TimedRobot is the most common, running periodic methods at 50Hz..."
+    },
+    {
+      "url": "https://docs.wpilib.org/en/stable/docs/software/basic-programming/using-shuffleboard.html",
+      "title": "Using Shuffleboard",
+      "section": "Basic Programming",
+      "language": "Java",
+      "content": "Shuffleboard is a dashboard for viewing and editing robot data. It uses NetworkTables to communicate. Use Shuffleboard.getTab() to get or create tabs, then add() to put data. Supports numbers, booleans, strings, and complex types like subsystems and commands. Layouts can be saved and loaded. Widgets can be customized for different visualizations. Great for tuning PID, viewing sensor values, and controlling robot during testing.",
+      "content_preview": "Shuffleboard is a dashboard for viewing and editing robot data. It uses NetworkTables to communicate..."
+    }
+  ]
+}
+
