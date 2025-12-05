@@ -315,3 +315,4 @@ def format_sections(sections_by_vendor: dict[str, list[DocSection]]) -> str:
 
 
 
+
