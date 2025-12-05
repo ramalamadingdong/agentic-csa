@@ -7,20 +7,24 @@
     },
     "rev": {
       "enabled": true,
-      "languages": ["Java", "C++"]
+      "languages": ["Java", "C++", "Python"]
     },
     "ctre": {
-      "enabled": false,
-      "languages": ["Java", "C++"]
+      "enabled": true,
+      "languages": ["Java", "C++", "Python"]
     },
     "redux": {
       "enabled": false,
       "languages": ["Java"]
+    },
+    "photonvision": {
+      "enabled": true,
+      "languages": ["Java", "C++", "Python"]
     }
   },
   "cache": {
     "ttl_seconds": 3600,
-    "max_size_mb": 100
+    "max_size_mb": 200
   },
   "search": {
     "default_max_results": 10,
