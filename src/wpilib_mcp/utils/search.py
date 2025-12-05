@@ -57,11 +57,12 @@ class BM25SearchIndex(Generic[T]):
         
         Handles camelCase, snake_case, and preserves technical terms.
         """
+        # Split camelCase and PascalCase BEFORE lowercasing
+        text = re.sub(r"([a-z])([A-Z])", r"\1 \2", text)
+        text = re.sub(r"([A-Z]+)([A-Z][a-z])", r"\1 \2", text)
+        
         # Convert to lowercase
         text = text.lower()
-        
-        # Split camelCase and PascalCase
-        text = re.sub(r"([a-z])([A-Z])", r"\1 \2", text)
         
         # Replace underscores and hyphens with spaces
         text = re.sub(r"[_\-]", " ", text)

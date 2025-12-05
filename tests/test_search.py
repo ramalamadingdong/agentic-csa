@@ -46,17 +46,18 @@ class TestBM25SearchIndex:
     def test_search_with_filter(self):
         """Test search with filter function."""
         index = BM25SearchIndex()
+        # Use documents with varied content for better BM25 discrimination
         items = [
-            {"text": "Java motor control", "lang": "Java"},
-            {"text": "Python motor control", "lang": "Python"},
-            {"text": "C++ motor control", "lang": "C++"},
+            {"text": "Java SparkMax motor controller configuration guide", "lang": "Java"},
+            {"text": "Python sensor reading and data processing tutorial", "lang": "Python"},
+            {"text": "C++ PID controller implementation example", "lang": "C++"},
         ]
         
         index.build(items, text_extractor=lambda x: x["text"])
         
-        # Filter for Java only
+        # Search for Java-specific content with filter
         results = index.search_with_filter(
-            "motor control",
+            "SparkMax motor",
             filter_fn=lambda x: x["lang"] == "Java",
             max_results=5
         )
