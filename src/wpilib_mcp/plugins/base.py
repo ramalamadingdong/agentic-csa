@@ -264,3 +264,5 @@ class PluginBase(ABC):
     def __repr__(self) -> str:
         return f"<{self.__class__.__name__}(name={self.name!r}, initialized={self._initialized})>"
 
+
+

@@ -13,18 +13,27 @@ A plugin-based FRC documentation agent implemented as a Model Context Protocol (
 
 ## Installation
 
+### Installing uv
+
+`uv` is a fast Python package installer and resolver. Install it using one of the following methods:
+
+**Windows (PowerShell):**
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+**macOS/Linux:**
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+For more installation options and details, see the [official uv documentation](https://github.com/astral-sh/uv).
+
 ### Using uv (Recommended)
 
 ```bash
 cd wpilib-mcp
 uv sync
-```
-
-### Using pip
-
-```bash
-cd wpilib-mcp
-pip install -e .
 ```
 
 ## Quick Start
