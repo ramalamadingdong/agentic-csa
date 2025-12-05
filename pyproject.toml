@@ -1,6 +1,6 @@
 [project]
 name = "wpilib-mcp"
-version = "0.1.0"
+version = "1.0.0"
 description = "Plugin-based WPILib documentation agent as an MCP server"
 readme = "README.md"
 requires-python = ">=3.11"
