@@ -7,34 +7,44 @@ A plugin-based FRC documentation agent implemented as a Model Context Protocol (
 - **Unified Search**: Query WPILib + vendor docs with a single tool
 - **Plugin Architecture**: Extensible system for adding new documentation sources
 - **BM25 Ranking**: High-quality text search without embedding costs
-- **Multi-Vendor Support**: WPILib, REV Robotics, CTRE Phoenix, Redux Robotics
+- **Multi-Vendor Support**: WPILib, REV Robotics, CTRE Phoenix, Redux Robotics, PhotonVision
 - **Language Filtering**: Filter results by Java, Python, or C++
 - **Version Support**: Search specific documentation versions (2024, 2025, etc.)
 
 ## Installation
 
-### Installing uv
-
-`uv` is a fast Python package installer and resolver. Install it using one of the following methods:
-
-**Windows (PowerShell):**
-```powershell
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-**macOS/Linux:**
-```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-For more installation options and details, see the [official uv documentation](https://github.com/astral-sh/uv).
-
-### Using uv (Recommended)
+### Quick Install (PyPI)
 
 ```bash
-cd wpilib-mcp
-uv sync
+# Using uvx (recommended)
+uvx wpilib-mcp
+
+# Or with pip
+pip install wpilib-mcp
 ```
+
+### From Source
+
+If you want to modify or contribute to the project:
+
+1. **Install uv** (fast Python package manager):
+
+   **Windows (PowerShell):**
+   ```powershell
+   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+   ```
+
+   **macOS/Linux:**
+   ```bash
+   curl -LsSf https://astral.sh/uv/install.sh | sh
+   ```
+
+2. **Clone and install:**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/wpilib-mcp.git
+   cd wpilib-mcp
+   uv sync
+   ```
 
 ## Quick Start
 
@@ -48,10 +58,22 @@ uv run wpilib-mcp
 python -m wpilib_mcp.server
 ```
 
-### Configure in Claude Desktop
+### Configure in Claude Desktop / Cursor
 
-Add to `claude_desktop_config.json`:
+Add to your MCP configuration (`claude_desktop_config.json` or Cursor settings):
 
+```json
+{
+  "mcpServers": {
+    "wpilib": {
+      "command": "uvx",
+      "args": ["wpilib-mcp"]
+    }
+  }
+}
+```
+
+If running from source:
 ```json
 {
   "mcpServers": {
@@ -137,6 +159,7 @@ Edit `config.json` to customize plugin settings:
 | `rev` | REV Robotics | docs.revrobotics.com |
 | `ctre` | CTRE Phoenix | v6.docs.ctr-electronics.com |
 | `redux` | Redux Robotics | docs.reduxrobotics.com |
+| `photonvision` | PhotonVision | docs.photonvision.org |
 
 ## Building Documentation Indexes
 
@@ -346,7 +369,7 @@ search_frc_docs(query="brushless motor closed loop velocity control", vendors=["
 
 ## License
 
-BSD License - see LICENSE file for details.
+BSD-3-Clause License - see LICENSE file for details.
 
 ## Contributing
 
