@@ -1,406 +1,100 @@
 # FIRST Agentic CSA
 
-<!-- mcp-name: io.github.ramalamadingdong/first-agentic-csa -->
+<!-- mcp-name: first-agentic-csa -->
 
-A plugin-based FRC documentation agent implemented as a Model Context Protocol (MCP) server. Search across WPILib and vendor documentation (REV, CTRE, Redux, PhotonVision) using natural language queries. Built for FIRST Robotics Competition teams and CSAs (Control System Advisors).
+A helpful tool for FIRST Robotics Competition teams! This lets you search through all your FRC documentation (WPILib, REV, CTRE, and more) using simple questions. Instead of clicking through dozens of web pages, just ask a question and get the answer you need.
+
+## What Does This Do?
+
+Have you ever spent hours looking for how to configure a SparkMax motor controller? Or trying to find the right way to use a PID controller? This tool helps you find answers fast by searching through all the FRC documentation at once.
 
 ## Features
 
-- **Unified Search**: Query WPILib + vendor docs with a single tool
-- **Plugin Architecture**: Extensible system for adding new documentation sources
-- **BM25 Ranking**: High-quality text search without embedding costs
-- **Multi-Vendor Support**: WPILib, REV Robotics, CTRE Phoenix, Redux Robotics, PhotonVision
-- **Language Filtering**: Filter results by Java, Python, or C++
-- **Version Support**: Search specific documentation versions (2024, 2025, etc.)
+- **One Search for Everything**: Search WPILib, REV, CTRE, Redux, and PhotonVision docs all at once
+- **Ask in Plain English**: Type questions like "How do I configure a SparkMax?" instead of searching through menus
+- **Filter by Language**: Get results for Java, Python, or C++ (whichever you're using)
+- **Works with Any Year**: Search 2024 docs, 2025 docs, or whatever version you need
+- **Works in VS Code**: Set it up once and use it right in your coding environment
 
-## Installation
+## Installation for VS Code
 
-### Quick Install (PyPI)
+1. Open VS Code
+2. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) to open the command palette
+3. Type "MCP: Add Server" and select it
+4. Choose "Pip package" from the options
+5. When prompted, enter: `first-agentic-csa`
+6. VS Code will automatically install and configure everything for you!
 
-```bash
-# Using uvx (recommended)
-uvx first-agentic-csa
+### Setting Up GitHub Copilot
 
-# Or with pip
-pip install first-agentic-csa
-```
+To get the best experience with AI coding assistants (like GitHub Copilot or Cursor), add the `copilot-instructions.md` file to your FRC project. This tells the AI to always search the documentation before answering FRC questions.
 
-### From Source
+1. Copy the `copilot-instructions.md` file from this repository
+2. Paste it into the root folder of your FRC robot project
+3. The AI assistant will automatically use it to provide better, documentation-backed answers!
 
-If you want to modify or contribute to the project:
-
-1. **Install uv** (fast Python package manager):
-
-   **Windows (PowerShell):**
-   ```powershell
-   powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-   ```
-
-   **macOS/Linux:**
-   ```bash
-   curl -LsSf https://astral.sh/uv/install.sh | sh
-   ```
-
-2. **Clone and install:**
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/first-agentic-csa.git
-   cd first-agentic-csa
-   uv sync
-   ```
+That's it! Now you can ask questions about FRC documentation right in VS Code, and your AI assistant will automatically search the docs for accurate answers.
 
 ## Quick Start
 
-### Running the Server
+Once installed, you can search for documentation by asking questions like:
+- "How do I configure a SparkMax motor controller?"
+- "What's the best way to use PID control?"
+- "Show me examples of command-based programming"
 
-```bash
-# With uv
-uv run first-agentic-csa
+The tool will search through all the FRC documentation and give you the most relevant results.
 
-# Or directly
-python -m wpilib_mcp.server
-```
+## What Documentation Can I Search?
 
-### Configure in Claude Desktop / Cursor
+This tool searches through documentation from:
 
-Add to your MCP configuration (`claude_desktop_config.json` or Cursor settings):
+- **WPILib** - The main FRC programming library (docs.wpilib.org)
+- **REV Robotics** - SparkMax and other REV products (docs.revrobotics.com)
+- **CTRE Phoenix** - TalonFX and other CTRE products (v6.docs.ctr-electronics.com)
+- **Redux Robotics** - Redux products (docs.reduxrobotics.com)
+- **PhotonVision** - Computer vision library (docs.photonvision.org)
 
-```json
-{
-  "mcpServers": {
-    "frc-docs": {
-      "command": "uvx",
-      "args": ["first-agentic-csa"]
-    }
-  }
-}
-```
+You can search all of them at once, or pick specific ones to search.
 
-If running from source:
-```json
-{
-  "mcpServers": {
-    "frc-docs": {
-      "command": "uv",
-      "args": ["--directory", "/path/to/first-agentic-csa", "run", "first-agentic-csa"]
-    }
-  }
-}
-```
 
-### Configure in Other MCP Clients
+## Customization (Optional)
 
-The server uses stdio transport and is compatible with any MCP client.
+If you want to change settings, you can edit the `config.json` file. This is totally optional - the default settings work great for most teams.
 
-## Available Tools
+You can:
+- Turn off certain documentation sources if you don't use them
+- Set your default programming language
+- Change how many results you get back
 
-### `search_frc_docs`
+Most teams don't need to change anything - the defaults work well!
 
-Search FRC documentation across WPILib and vendor libraries.
+## Troubleshooting
 
-```
-query: "SparkMax configure"
-vendors: ["all"] | ["wpilib", "rev", "ctre", "redux"]
-version: "2025"
-language: "Java" | "Python" | "C++"
-max_results: 1-25
-```
+### "Command not found" or Server won't start
 
-### `fetch_frc_doc_page`
+Make sure you:
+1. Have Python 3.11 or newer installed
+2. Restarted VS Code after adding the server
+3. Checked that the MCP extension is installed and enabled
 
-Fetch the full content of a documentation page by URL.
+### Still having issues?
 
-```
-url: "https://docs.wpilib.org/en/stable/docs/software/commandbased/commands.html"
-```
+1. Open the command palette (`Ctrl+Shift+P`)
+2. Type "MCP: Remove Server" and select it
+3. Choose `frc-docs` (or whatever you named it)
+4. Then add it again following the installation steps above
 
-### `list_frc_doc_sections`
+## Need Help?
 
-List available documentation sections from vendors.
+If you're stuck or have questions:
+1. Make sure you restarted VS Code after adding the server
+2. Check the troubleshooting section above
+3. Verify that Python 3.11 or newer is installed and working
 
-```
-vendors: ["all"] | ["wpilib", "rev"]
-version: "2025"
-language: "Java"
-```
+## For Advanced Users
 
-## Configuration
-
-Edit `config.json` to customize plugin settings:
-
-```json
-{
-  "plugins": {
-    "wpilib": {
-      "enabled": true,
-      "versions": ["2025"],
-      "languages": ["Java", "Python", "C++"]
-    },
-    "rev": {
-      "enabled": true,
-      "languages": ["Java", "C++"]
-    },
-    "ctre": {
-      "enabled": false
-    }
-  },
-  "cache": {
-    "ttl_seconds": 3600
-  },
-  "search": {
-    "default_max_results": 10,
-    "default_language": "Java"
-  }
-}
-```
-
-## Supported Plugins
-
-| Plugin | Vendor | Documentation |
-|--------|--------|---------------|
-| `wpilib` | WPILib | docs.wpilib.org |
-| `rev` | REV Robotics | docs.revrobotics.com |
-| `ctre` | CTRE Phoenix | v6.docs.ctr-electronics.com |
-| `redux` | Redux Robotics | docs.reduxrobotics.com |
-| `photonvision` | PhotonVision | docs.photonvision.org |
-
-## Building Documentation Indexes
-
-Each plugin has its own index builder that vendors can maintain independently.
-
-### Using the convenience wrapper:
-
-```bash
-# Build all plugin indexes
-python scripts/build_index.py all
-
-# Build specific vendor
-python scripts/build_index.py wpilib --version 2025
-python scripts/build_index.py rev
-python scripts/build_index.py ctre
-```
-
-### Running plugin builders directly:
-
-```bash
-# Each plugin has its own build_index.py with vendor-specific options
-python -m wpilib_mcp.plugins.wpilib.build_index --version stable --verbose
-python -m wpilib_mcp.plugins.rev.build_index --verbose
-python -m wpilib_mcp.plugins.ctre.build_index --version stable
-python -m wpilib_mcp.plugins.redux.build_index
-```
-
-## Plugin Development
-
-Create a new plugin by following this structure:
-
-```
-plugins/
-└── myplugin/
-    ├── __init__.py
-    ├── plugin.py        # Must export `Plugin` class
-    ├── build_index.py   # Index builder script (vendor-maintained)
-    └── data/
-        └── index.json
-```
-
-Your `Plugin` class must implement `PluginBase`, and you should provide a `build_index.py` script:
-
-### Plugin Implementation
-
-Your `Plugin` class must implement `PluginBase`:
-
-```python
-from wpilib_mcp.plugins.base import PluginBase, PluginConfig, SearchResult, PageContent, DocSection
-
-class Plugin(PluginBase):
-    @property
-    def name(self) -> str:
-        return "myplugin"
-    
-    @property
-    def display_name(self) -> str:
-        return "My Plugin"
-    
-    @property
-    def description(self) -> str:
-        return "Description of my plugin"
-    
-    @property
-    def supported_versions(self) -> list[str]:
-        return ["2025"]
-    
-    @property
-    def supported_languages(self) -> list[str]:
-        return ["Java", "Python"]
-    
-    @property
-    def base_urls(self) -> list[str]:
-        return ["https://docs.example.com"]
-    
-    async def initialize(self, config: PluginConfig) -> None:
-        # Load index, build search corpus
-        pass
-    
-    async def search(self, query, version=None, language=None, max_results=10) -> list[SearchResult]:
-        # Return search results
-        pass
-    
-    async def fetch_page(self, url) -> PageContent:
-        # Fetch and clean page content
-        pass
-    
-    async def list_sections(self, version=None, language=None) -> list[DocSection]:
-        # Return documentation sections
-        pass
-```
-
-### Index Builder
-
-Create a `build_index.py` that extends `BaseIndexBuilder`:
-
-```python
-from wpilib_mcp.utils.indexer import BaseIndexBuilder
-
-class MyPluginIndexBuilder(BaseIndexBuilder):
-    def __init__(self):
-        super().__init__(
-            vendor="myplugin",
-            base_url="https://docs.example.com",
-            max_pages=200,
-        )
-    
-    @property
-    def start_urls(self) -> list[str]:
-        return ["https://docs.example.com/getting-started"]
-    
-    def should_crawl(self, url: str) -> bool:
-        return "docs.example.com" in url
-    
-    def extract_section(self, soup, url) -> str:
-        # Return section name based on URL/content
-        return "General"
-    
-    def extract_language(self, soup, url) -> str:
-        return "All"
-
-if __name__ == "__main__":
-    import asyncio
-    asyncio.run(MyPluginIndexBuilder().build_and_save("latest", Path("data/index.json")))
-```
-
-## Index File Format
-
-Each plugin uses a JSON index with this structure:
-
-```json
-{
-  "vendor": "myplugin",
-  "version": "2025",
-  "built_at": "2025-01-15T00:00:00Z",
-  "pages": [
-    {
-      "url": "https://docs.example.com/page",
-      "title": "Page Title",
-      "section": "Section Name",
-      "language": "Java",
-      "content": "Full searchable content...",
-      "content_preview": "First 300 chars for display..."
-    }
-  ]
-}
-```
-
-## Development
-
-### Running Tests
-
-```bash
-uv run pytest tests/ -v
-```
-
-### Project Structure
-
-```
-wpilib-mcp/
-├── pyproject.toml          # Project configuration
-├── config.json             # User configuration
-├── src/wpilib_mcp/
-│   ├── server.py           # MCP server entry point
-│   ├── plugin_loader.py    # Plugin discovery/loading
-│   ├── tool_router.py      # Routes tools to plugins
-│   ├── utils/
-│   │   ├── fetch.py        # HTTP with caching
-│   │   ├── html.py         # HTML cleaning
-│   │   └── search.py       # BM25 search
-│   └── plugins/
-│       ├── base.py         # Plugin base class
-│       ├── wpilib/         # WPILib plugin
-│       ├── rev/            # REV plugin
-│       ├── ctre/           # CTRE plugin
-│       └── redux/          # Redux plugin
-├── scripts/
-│   └── build_index.py      # Index builder script
-└── tests/
-    ├── test_search.py
-    └── test_plugins.py
-```
-
-## Example Queries
-
-**Finding Command-Based Programming docs:**
-```
-search_frc_docs(query="command based programming subsystems", vendors=["wpilib"])
-```
-
-**Comparing motor controllers:**
-```
-search_frc_docs(query="SparkMax configuration", vendors=["rev"])
-search_frc_docs(query="TalonFX configuration", vendors=["ctre"])
-```
-
-**Looking up specific hardware:**
-```
-search_frc_docs(query="CANcoder absolute position swerve", vendors=["ctre"])
-search_frc_docs(query="through bore encoder", vendors=["rev"])
-```
-
-**Cross-vendor search:**
-```
-search_frc_docs(query="brushless motor closed loop velocity control", vendors=["all"])
-```
-
-## MCP Registry & VS Code Marketplace
-
-This MCP server is available in the official MCP Registry and can be discovered through VS Code's MCP integration.
-
-### Finding in VS Code
-
-1. Open VS Code Extensions view
-2. Search for "MCP" or "WPILib"
-3. Browse available MCP servers
-4. Install and configure through VS Code's MCP settings
-
-### Registry Listing
-
-- **Official MCP Registry**: [registry.modelcontextprotocol.io](https://registry.modelcontextprotocol.io)
-- **Package Name**: `first-agentic-csa` (PyPI)
-- **Registry Entry**: `com.first.agentic-csa/wpilib-mcp`
-
-For publishing and registry management, see [PUBLISHING.md](PUBLISHING.md).
+If you want to contribute to this project or add support for new documentation sources, check out the technical documentation in the codebase. The project is open source and welcomes contributions!
 
 ## License
 
-BSD-3-Clause License - see LICENSE file for details.
-
-## Contributing
-
-Contributions welcome! Please:
-
-1. Fork the repository
-2. Add tests for new functionality
-3. Submit a pull request
-
-For new vendor plugins, please include:
-- Complete plugin implementation
-- Pre-built index file
-- Documentation updates
+This project is open source and free to use. See the LICENSE file for details.
