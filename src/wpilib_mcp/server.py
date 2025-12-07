@@ -2,9 +2,18 @@
 
 import asyncio
 import logging
+import os
 import sys
 from pathlib import Path
 from typing import Optional
+
+# Fix Windows line endings for MCP protocol compatibility
+# Windows uses CRLF (\r\n) but MCP expects LF (\n) only
+# Some clients (like Antigravity) are strict about this
+if sys.platform == "win32":
+    import msvcrt
+    msvcrt.setmode(sys.stdout.fileno(), os.O_BINARY)
+    msvcrt.setmode(sys.stdin.fileno(), os.O_BINARY)
 
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
