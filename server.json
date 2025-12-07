@@ -3,7 +3,7 @@
   "name": "io.github.ramalamadingdong/first-agentic-csa",
   "description": "FRC documentation MCP server for WPILib, REV, CTRE, Redux, and PhotonVision.",
   "version": "0.3.8",
-  "icon": "https://raw.githubusercontent.com/ramalamadingdong/first-agentic-csa/master/assets/agentic_csa.png",
+  "icon": "https://raw.githubusercontent.com/ramalamadingdong/first-agentic-csa/main/assets/agentic_csa.png",
   "packages": [
     {
       "registryType": "pypi",
