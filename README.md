@@ -1,6 +1,6 @@
 # FIRST Agentic CSA
 
-<!-- mcp-name: first-agentic-csa -->
+<!-- mcp-name: ramalamadingdong/first-agentic-csa -->
 
 A helpful tool for FIRST Robotics Competition teams! This lets you search through all your FRC documentation (WPILib, REV, CTRE, and more) using simple questions. Instead of clicking through dozens of web pages, just ask a question and get the answer you need.
 

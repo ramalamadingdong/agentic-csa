@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
-  "name": "first-agentic-csa",
+  "name": "ramalamadingdong/first-agentic-csa",
   "description": "FRC documentation MCP server for WPILib, REV, CTRE, Redux, and PhotonVision.",
   "version": "0.3.9",
   "icon": "https://raw.githubusercontent.com/ramalamadingdong/first-agentic-csa/main/assets/agentic_csa.png",
