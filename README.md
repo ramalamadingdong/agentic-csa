@@ -367,6 +367,25 @@ search_frc_docs(query="through bore encoder", vendors=["rev"])
 search_frc_docs(query="brushless motor closed loop velocity control", vendors=["all"])
 ```
 
+## MCP Registry & VS Code Marketplace
+
+This MCP server is available in the official MCP Registry and can be discovered through VS Code's MCP integration.
+
+### Finding in VS Code
+
+1. Open VS Code Extensions view
+2. Search for "MCP" or "WPILib"
+3. Browse available MCP servers
+4. Install and configure through VS Code's MCP settings
+
+### Registry Listing
+
+- **Official MCP Registry**: [registry.modelcontextprotocol.io](https://registry.modelcontextprotocol.io)
+- **Package Name**: `first-agentic-csa` (PyPI)
+- **Registry Entry**: `com.first.agentic-csa/wpilib-mcp`
+
+For publishing and registry management, see [PUBLISHING.md](PUBLISHING.md).
+
 ## License
 
 BSD-3-Clause License - see LICENSE file for details.
