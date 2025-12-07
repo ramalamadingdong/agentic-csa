@@ -75,7 +75,8 @@ When writing code for FRC projects:
 | TalonFX, Falcon 500, Kraken, CANcoder, Pigeon | CTRE | `vendors=["ctre"]` |
 | Canandcoder, Canandmag | Redux | `vendors=["redux"]` |
 | NavX | WPILib/Studica | `vendors=["wpilib"]` |
-| Limelight, PhotonVision | WPILib | `vendors=["wpilib"]` |
+| Limelight | WPILib | `vendors=["wpilib"]` |
+| PhotonVision | PhotonVision | `vendors=["photonvision"]` |
 
 ## When Docs Don't Have the Answer
 
