@@ -1,6 +1,6 @@
 [project]
 name = "first-agentic-csa"
-version = "0.3.10"
+version = "0.3.11"
 description = "Plugin-based FRC documentation agent as an MCP server for WPILib and vendor libraries"
 readme = "README.md"
 requires-python = ">=3.11"
