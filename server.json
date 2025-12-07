@@ -1,6 +1,6 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
-  "name": "com.first.agentic-csa/wpilib-mcp",
+  "name": "io.github.ramalamadingdong/first-agentic-csa",
   "description": "Plugin-based FRC documentation agent as an MCP server. Search across WPILib and vendor documentation (REV, CTRE, Redux, PhotonVision) using natural language queries. Built for FIRST Robotics Competition teams and CSAs (Control System Advisors).",
   "status": "active",
   "version": "0.3.2",

@@ -81,13 +81,15 @@ jobs:
           uv publish --trusted-publishing always
 
       # Publish to MCP Registry
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+      - name: Install mcp-publisher
+        run: |
+          curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" | tar xz
+          chmod +x mcp-publisher
+          sudo mv mcp-publisher /usr/local/bin/
 
       - name: Publish to MCP Registry
         env:
           GITHUB_TOKEN: ${{ secrets.MCP_REGISTRY_TOKEN }}
         run: |
-          npx --yes @modelcontextprotocol/publisher validate server.json
-          npx --yes @modelcontextprotocol/publisher publish server.json
+          mcp-publisher login github
+          mcp-publisher publish

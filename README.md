@@ -1,5 +1,7 @@
 # FIRST Agentic CSA
 
+<!-- mcp-name: io.github.ramalamadingdong/first-agentic-csa -->
+
 A plugin-based FRC documentation agent implemented as a Model Context Protocol (MCP) server. Search across WPILib and vendor documentation (REV, CTRE, Redux, PhotonVision) using natural language queries. Built for FIRST Robotics Competition teams and CSAs (Control System Advisors).
 
 ## Features
