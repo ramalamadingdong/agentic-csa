@@ -52,7 +52,7 @@ jobs:
         run: |
           NEW="${{ steps.version.outputs.new }}"
           sed -i 's/version = "${{ steps.version.outputs.current }}"/version = "'"$NEW"'"/' pyproject.toml
-          jq --arg v "$NEW" '.version = $v | .packages[0].version = $v' server.json > tmp.json
+          jq --arg v "$NEW" '.version = $v' server.json > tmp.json
           mv tmp.json server.json
 
       - name: Commit and tag
