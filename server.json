@@ -1,12 +1,12 @@
 {
   "name": "io.github.ramalamadingdong/first-agentic-csa",
   "description": "Plugin-based FRC documentation agent as an MCP server. Search across WPILib and vendor documentation (REV, CTRE, Redux, PhotonVision) using natural language queries.",
-  "version": "0.3.3",
+  "version": "0.3.6",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "first-agentic-csa",
-      "version": "0.3.3",
+      "version": "0.3.6",
       "transport": {
         "type": "stdio"
       }
