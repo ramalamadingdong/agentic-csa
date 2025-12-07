@@ -7,7 +7,7 @@ Everything is automated in a single workflow: `.github/workflows/release.yml`
 1. **PyPI**: Configure trusted publishing at https://pypi.org/manage/project/first-agentic-csa/settings/publishing/
    - Workflow: `release.yml`, Environment: `pypi`
 
-2. **MCP Registry**: Create a GitHub PAT at https://github.com/settings/tokens (no scopes needed), add as secret `MCP_REGISTRY_TOKEN`
+2. **MCP Registry**: No setup needed - uses GitHub OIDC authentication automatically
 
 ## To Release
 

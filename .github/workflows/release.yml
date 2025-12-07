@@ -88,8 +88,6 @@ jobs:
           sudo mv mcp-publisher /usr/local/bin/
 
       - name: Publish to MCP Registry
-        env:
-          GITHUB_TOKEN: ${{ secrets.MCP_REGISTRY_TOKEN }}
         run: |
-          mcp-publisher login github
+          mcp-publisher login github-oidc
           mcp-publisher publish
