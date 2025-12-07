@@ -1,13 +1,12 @@
 {
-  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
   "name": "io.github.ramalamadingdong/first-agentic-csa",
-  "description": "Plugin-based FRC documentation agent as an MCP server. Search across WPILib and vendor documentation (REV, CTRE, Redux, PhotonVision) using natural language queries. Built for FIRST Robotics Competition teams and CSAs.",
-  "version": "0.3.5",
+  "description": "Plugin-based FRC documentation agent as an MCP server. Search across WPILib and vendor documentation (REV, CTRE, Redux, PhotonVision) using natural language queries.",
+  "version": "0.3.3",
   "packages": [
     {
-      "registry_type": "pypi",
+      "registryType": "pypi",
       "identifier": "first-agentic-csa",
-      "version": "0.3.5",
+      "version": "0.3.3",
       "transport": {
         "type": "stdio"
       }
