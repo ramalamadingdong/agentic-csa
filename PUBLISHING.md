@@ -1,27 +1,18 @@
-# Publishing to MCP Registry
+# Release & Publishing
 
-Publish to the official MCP Registry at [registry.modelcontextprotocol.io](https://registry.modelcontextprotocol.io).
+Everything is automated in a single workflow: `.github/workflows/release.yml`
 
-## Automated Publishing
+## One-time Setup
 
-The workflow `.github/workflows/publish-mcp-registry.yml` automatically publishes after PyPI publication.
+1. **PyPI**: Already configured with trusted publishing
+2. **MCP Registry**: Create a GitHub PAT at https://github.com/settings/tokens (no scopes needed), add as secret `MCP_REGISTRY_TOKEN`
 
-### Setup (one-time)
+## To Release
 
-1. Create a GitHub PAT at https://github.com/settings/tokens (no scopes needed for public repos)
-2. Add it as repository secret: Settings → Secrets → `MCP_REGISTRY_TOKEN`
-
-## Manual Publishing
-
-```bash
-npx @modelcontextprotocol/publisher login
-npx @modelcontextprotocol/publisher publish server.json
-```
-
-## Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| Auth errors | Run `npx @modelcontextprotocol/publisher login` |
-| Validation errors | Check `server.json` version matches PyPI |
-| Publish fails | Ensure package is on PyPI first |
+1. Go to Actions → Release → Run workflow
+2. Choose bump type: `patch`, `minor`, or `major`
+3. Done! The workflow will:
+   - Bump version in `pyproject.toml` and `server.json`
+   - Create git tag and GitHub Release
+   - Publish to PyPI
+   - Publish to MCP Registry
