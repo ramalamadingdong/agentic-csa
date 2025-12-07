@@ -2,12 +2,12 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-10-17/server.schema.json",
   "name": "io.github.ramalamadingdong/first-agentic-csa",
   "description": "FRC documentation MCP server for WPILib, REV, CTRE, Redux, and PhotonVision.",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "packages": [
     {
       "registryType": "pypi",
       "identifier": "first-agentic-csa",
-      "version": "0.3.7",
+      "version": "0.3.8",
       "transport": {
         "type": "stdio"
       }
