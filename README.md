@@ -29,9 +29,8 @@ Have you ever spent hours looking for how to configure a SparkMax motor controll
 
 To get the best experience with AI coding assistants (like GitHub Copilot or Cursor), add the `copilot-instructions.md` file to your FRC project. This tells the AI to always search the documentation before answering FRC questions.
 
-1. Copy the `copilot-instructions.md` file from this repository
-2. Paste it into the root folder of your FRC robot project
-3. The AI assistant will automatically use it to provide better, documentation-backed answers!
+1. Copy the `copilot-instructions.md` file from this repository to  .github directory if it does not already exist in your repo
+2. The AI assistant will automatically use it to provide better, documentation-backed answers!
 
 That's it! Now you can ask questions about FRC documentation right in VS Code, and your AI assistant will automatically search the docs for accurate answers.
 
