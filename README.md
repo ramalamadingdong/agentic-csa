@@ -55,6 +55,22 @@ This tool searches through documentation from:
 
 You can search all of them at once, or pick specific ones to search.
 
+## Installation for Others
+
+To install this mcp in other editors that do not have the user interface for the pip package you can add the following to your mcp config json file:
+
+```json
+{
+  "mcpServers": {
+    "frc-docs": {
+      "command": "uvx",
+      "args": ["first-agentic-csa"],
+    }
+  }
+}
+```
+
+You will then have to add the instructions to your prompts manually or to your tools rules.
 
 ## Customization (Optional)
 
