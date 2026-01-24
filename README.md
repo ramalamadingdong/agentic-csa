@@ -18,49 +18,23 @@ Have you ever spent hours looking for how to configure a SparkMax motor controll
 
 ## Installation for VS Code
 
-### Method 1: Automatic Installation (Recommended)
-
-The easiest way to install - VS Code will automatically configure everything for you:
-
-1. Open VS Code
-2. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) to open the command palette
-3. Type "MCP: Add Server" and select it
-4. Choose "Pip package" from the options
-5. When prompted, enter: `first-agentic-csa`
-6. VS Code will automatically install and configure everything for you!
-
-**Note:** Some users may encounter a "model_not_supported" error with this method. If that happens, use Method 2 (Manual Configuration) below - it's a reliable fallback that avoids this issue entirely.
-
-### Method 2: Manual Configuration (Fallback if automatic installation fails)
-
-If you encounter any issues with automatic installation, you can configure the server manually. This method avoids potential AI model compatibility issues and works consistently across all VS Code versions.
-
-**Quick Setup:**
-1. Open VS Code Settings (File → Preferences → Settings, or `Ctrl+,`)
-2. Click the "Open Settings (JSON)" icon in the top right, or press `Ctrl+Shift+P` and type "Preferences: Open User Settings (JSON)"
-3. Copy the configuration from `vscode-settings.example.json` in this repository, or add this to your `settings.json`:
+1. Install `uv` if you haven't already. You can install it via:
+   - **Windows/Mac/Linux**: `pip install uv` or visit [https://github.com/astral-sh/uv](https://github.com/astral-sh/uv)
+2. Open VS Code
+3. Press `Ctrl+Shift+P` (or `Cmd+Shift+P` on Mac) to open the command palette
+4. Type "MCP: Add User Configuration" and select it
+5. In the server settings, paste this configuration:
 
 ```json
-{
-  "mcp.servers": {
     "frc-docs": {
       "command": "uvx",
       "args": ["first-agentic-csa"]
     }
   }
-}
 ```
 
-**Note:** If `mcp.servers` doesn't work, try `mcpServers` (camelCase) instead. The exact key name depends on your VS Code version.
-
-4. Save the file and restart VS Code
-5. The MCP server should now be available!
-
-**Alternative: Via VS Code Settings UI**
-- Open VS Code Settings (`Ctrl+,`)
-- Search for "MCP" in the settings search bar
-- Look for "MCP: Servers" setting
-- Click "Edit in settings.json" and add the configuration above
+6. Save the file and restart VS Code
+7. The MCP server should now be available!
 
 ### Setting Up GitHub Copilot
 
@@ -92,22 +66,6 @@ This tool searches through documentation from:
 
 You can search all of them at once, or pick specific ones to search.
 
-## Installation for Others
-
-To install this mcp in other editors that do not have the user interface for the pip package you can add the following to your mcp config json file:
-
-```json
-{
-  "mcpServers": {
-    "frc-docs": {
-      "command": "uvx",
-      "args": ["first-agentic-csa"],
-    }
-  }
-}
-```
-
-You will then have to add the instructions to your prompts manually or to your tools rules.
 
 ## Customization (Optional)
 
@@ -121,15 +79,6 @@ You can:
 Most teams don't need to change anything - the defaults work well!
 
 ## Troubleshooting
-
-### "The requested model is not supported" error
-
-If you see this error when trying to add the server:
-```
-Failed to generate MCP configuration for first-agentic-csa: Request Failed: 400 {"error":{"message":"The requested model is not supported."...}}
-```
-
-This happens when VS Code tries to use AI to generate the configuration, but the AI model isn't supported. **Solution:** Use Method 2 (Manual Configuration) from the Installation section above. Manual configuration bypasses this issue entirely and is a reliable fallback.
 
 ### "Command not found" or Server won't start
 
