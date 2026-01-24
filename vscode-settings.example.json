@@ -1,0 +1,8 @@
+{
+  "mcp.servers": {
+    "frc-docs": {
+      "command": "uvx",
+      "args": ["first-agentic-csa"]
+    }
+  }
+}
