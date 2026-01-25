@@ -2,27 +2,69 @@
 
 You are assisting with a FIRST Robotics Competition (FRC) project using WPILib. You have access to an MCP server that provides documentation search across WPILib and vendor libraries (REV, CTRE, Redux, etc.).
 
-IMPORTANT: Before answering any question about FRC programming, motor controllers, sensors, WPILib, or vendor APIs, you MUST run the MCP documentation search/fetch tools and base your answer on those results.
+IMPORTANT: Before answering any question about FRC programming, motor controllers, sensors, WPILib, or vendor APIs, you SHOULD run the MCP documentation search/fetch tools to verify your answer and provide citations.
 
-## Mandatory Documentation-First Policy
+## Documentation-First Policy with Smart Fallback
 
-This repository requires that all FRC-related questions be investigated with the MCP documentation tools before producing a final answer. Do not rely solely on memory or training data; always perform the steps below and include the results and citations in your response.
+Use MCP tools to search documentation, but apply judgment about when to trust results vs. your own knowledge:
+
+**When to trust search results:**
+- Results have high confidence scores (> 0.5)
+- Multiple relevant results from the same vendor
+- Results directly mention the exact API/hardware asked about
+
+**When to use your knowledge instead:**
+- Search returns no results or very low confidence
+- Results seem irrelevant to the actual question
+- You have strong knowledge about a common FRC topic
 
 Required workflow for FRC questions:
 
-- **Step 1 — Search (MCP required):** Call `mcp_wpilib_search_frc_docs(query=..., vendors=[...])` (use `vendors=["all"]` if unsure). Capture the top relevant results.
-- **Step 2 — Fetch (MCP required):** For each relevant result, call `mcp_wpilib_fetch_frc_doc_page(url=...)` and review the page content for exact API usage, examples, and notes.
-- **Step 3 — Answer with citations:** Include the documentation URLs (and short quoted excerpts when helpful) in your answer. If the docs conflict, explain the discrepancy and include all sources used.
+- **Step 1 — Format Query:** Convert the user's question into effective search keywords (see Query Formatting below)
+- **Step 2 — Search:** Call `mcp_wpilib_search_frc_docs(query=..., vendors=[...])`. Check the `confidence` scores and `suggestions` in results.
+- **Step 3 — Evaluate Results:** If confidence is low or results seem off, try alternative queries or use your knowledge with appropriate caveats.
+- **Step 4 — Fetch:** For high-confidence results, call `mcp_wpilib_fetch_frc_doc_page(url=...)` to get full content.
+- **Step 5 — Answer with citations:** Include documentation URLs when available. If using your knowledge, note that documentation wasn't available.
 
-When to skip MCP: only skip if the question is clearly non-FRC (pure Python, unrelated algorithms, general tooling). When in doubt, run the MCP search.
+## Query Formatting Guidelines
 
-Examples of required tool usage:
+**CRITICAL:** Format queries as keyword searches, not natural language questions.
+
+| User Question | BAD Query | GOOD Query |
+|---------------|-----------|------------|
+| "How do I configure a SparkMax?" | "how do I configure a sparkmax" | "SparkMax configuration" |
+| "What's the best way to set up PID?" | "what is the best way to set up pid" | "PID controller setup" |
+| "Can you show me CAN bus wiring?" | "can you show me can bus wiring" | "CAN bus wiring" |
+
+**Query formatting rules:**
+1. Remove question words (how, what, why, can, etc.)
+2. Use the exact product names: `SparkMax`, `TalonFX`, `CANcoder`, `NEO`
+3. Keep FRC acronyms intact: `CAN`, `PID`, `PWM`, `DIO`
+4. Use 2-4 keywords, not full sentences
+5. Include the action: "configure", "setup", "wiring", "code example"
+
+**Examples of good queries:**
 ```
-mcp_wpilib_search_frc_docs(query="SparkMax NEO brushless setup", vendors=["rev"])
-mcp_wpilib_fetch_frc_doc_page(url="https://docs.revrobotics.com/...")
+"SparkMax brushless configuration"
+"TalonFX PID tuning"
+"CAN bus troubleshooting"
+"command-based subsystem example"
+"swerve drive odometry"
+"NEO current limit"
 ```
 
-If you cannot call the MCP tools (tool outage or missing permissions), explicitly state that you could not run the required searches and ask whether to proceed with a best-effort answer. Do not produce an authoritative-sounding answer without the MCP citations.
+## Understanding Search Results
+
+The search returns results with these fields:
+- `confidence`: 0.0-1.0 score (higher = more relevant)
+- `suggestions`: Alternative queries if results are weak
+
+**Interpreting confidence:**
+- `> 0.7`: High confidence - trust these results
+- `0.4 - 0.7`: Medium confidence - results may be relevant
+- `< 0.4`: Low confidence - consider rephrasing or using your knowledge
+
+If you see suggestions like `'sparkmax' → 'spark max'`, try the suggested term.
 
 ## Tool Usage Patterns
 
@@ -80,11 +122,18 @@ When writing code for FRC projects:
 
 ## When Docs Don't Have the Answer
 
-If search results are empty or unhelpful:
-1. Try broader search terms
-2. Try `vendors=["all"]` to cast a wider net
-3. Check `list_frc_doc_sections` to see what's available
-4. Be honest with the student that you couldn't find documentation, and offer your best guess with appropriate caveats
+If search results are empty, low confidence, or seem irrelevant:
+
+1. **Rephrase the query** using the formatting guidelines above
+2. **Try synonyms:** The search expands common terms automatically, but you can try:
+   - "motor controller" ↔ "SparkMax" / "TalonFX"
+   - "encoder" ↔ "CANcoder" / "through bore"
+   - "gyro" ↔ "Pigeon" / "NavX"
+3. **Broaden the vendor:** Try `vendors=["all"]`
+4. **Check suggestions:** The search may suggest alternative spellings
+5. **Use your knowledge:** If search consistently fails, you likely have accurate knowledge about the topic. Answer with a note like: "I couldn't find this in the current documentation index, but based on my knowledge..."
+
+**Don't apologize excessively** for missing docs. The documentation index doesn't cover everything - it's a supplement, not a replacement for your knowledge.
 
 ## Example Interaction
 

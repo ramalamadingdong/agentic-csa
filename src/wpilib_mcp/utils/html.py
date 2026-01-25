@@ -6,6 +6,88 @@ from typing import Optional
 from bs4 import BeautifulSoup, NavigableString, Tag
 
 
+# Language detection patterns for code blocks
+LANGUAGE_INDICATORS = {
+    "java": [
+        r"import\s+(?:com\.|edu\.|org\.|java\.)",
+        r"public\s+class\s+\w+",
+        r"(?:public|private|protected)\s+(?:static\s+)?(?:void|int|String|boolean)",
+        r"System\.out\.println",
+        r"@Override",
+        r"new\s+\w+\(",
+    ],
+    "python": [
+        r"^import\s+\w+",
+        r"^from\s+\w+\s+import",
+        r"def\s+\w+\s*\(",
+        r"self\.",
+        r"__init__",
+        r"print\s*\(",
+        r":\s*$",  # Colon at end of line
+    ],
+    "cpp": [
+        r"#include\s*<",
+        r"#include\s*\"",
+        r"std::",
+        r"frc::",
+        r"rev::",
+        r"ctre::",
+        r"void\s+\w+::\w+",
+        r"^\s*using\s+namespace",
+        r"->\w+\(",  # Arrow operator
+    ],
+}
+
+
+def detect_code_language(code_text: str, class_hints: list[str] = None) -> Optional[str]:
+    """
+    Detect programming language from code text and/or class hints.
+
+    Args:
+        code_text: The actual code content
+        class_hints: CSS classes from the code element
+
+    Returns:
+        Detected language or None
+    """
+    # Check class hints first (more reliable)
+    if class_hints:
+        class_str = " ".join(class_hints).lower()
+        for lang in ["java", "python", "py", "cpp", "c++"]:
+            if lang in class_str:
+                return "python" if lang == "py" else ("cpp" if lang == "c++" else lang)
+
+        # Check for highlight.js / prism patterns
+        for cls in class_hints:
+            cls_lower = cls.lower()
+            if cls_lower.startswith("language-"):
+                lang = cls_lower.replace("language-", "")
+                if lang in ("java", "python", "py", "cpp", "c++", "cxx"):
+                    return "python" if lang == "py" else ("cpp" if lang in ("c++", "cxx") else lang)
+            if cls_lower.startswith("highlight-"):
+                lang = cls_lower.replace("highlight-", "")
+                if lang in ("java", "python", "cpp"):
+                    return lang
+
+    # Fall back to content analysis
+    if not code_text or len(code_text) < 10:
+        return None
+
+    scores = {"java": 0, "python": 0, "cpp": 0}
+
+    for lang, patterns in LANGUAGE_INDICATORS.items():
+        for pattern in patterns:
+            if re.search(pattern, code_text, re.MULTILINE):
+                scores[lang] += 1
+
+    # Need at least 2 matches to be confident
+    max_lang = max(scores, key=scores.get)
+    if scores[max_lang] >= 2:
+        return max_lang
+
+    return None
+
+
 class HtmlCleaner:
     """Extract and clean text content from HTML documentation pages."""
     
@@ -115,10 +197,24 @@ class HtmlCleaner:
                         parts.append(f"\n\n## {heading_text}\n")
                 
                 elif child.name == "pre":
-                    # Code block - preserve formatting
+                    # Code block - preserve formatting and detect language
                     code_text = child.get_text()
                     if code_text.strip():
-                        parts.append(f"\n```\n{code_text}\n```\n")
+                        # Get language from class hints
+                        code_elem = child.find("code") or child
+                        class_hints = code_elem.get("class", [])
+                        if isinstance(class_hints, str):
+                            class_hints = class_hints.split()
+
+                        # Also check parent pre element classes
+                        pre_classes = child.get("class", [])
+                        if isinstance(pre_classes, str):
+                            pre_classes = pre_classes.split()
+                        all_hints = class_hints + pre_classes
+
+                        lang = detect_code_language(code_text, all_hints)
+                        lang_tag = lang if lang else ""
+                        parts.append(f"\n```{lang_tag}\n{code_text}\n```\n")
                 
                 elif child.name == "code" and child.parent.name != "pre":
                     # Inline code
