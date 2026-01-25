@@ -90,13 +90,38 @@ mcp_wpilib_search_frc_docs(query="brushless motor setup", vendors=["ctre"], max_
 mcp_wpilib_fetch_frc_doc_page(url="https://docs.revrobotics.com/...")
 ```
 
+## Automatic Context Detection
+
+The search tool **automatically detects** the project's programming language and vendor libraries by scanning:
+- File extensions (.java, .py, .cpp)
+- Build files (build.gradle, pyproject.toml, CMakeLists.txt)
+- Vendordeps folder (vendordeps/*.json)
+- Import statements in source code
+
+**This means you usually don't need to specify `language` or `vendors`!**
+
+```
+# Let auto-detection handle it (recommended)
+mcp_wpilib_search_frc_docs(query="SparkMax configuration")
+
+# Or disable auto-detection if needed
+mcp_wpilib_search_frc_docs(query="SparkMax configuration", auto_detect=false, vendors=["rev"], language="Java")
+```
+
+**To see what was detected:**
+```
+mcp_wpilib_detect_project_context()
+```
+
+This returns the detected language, vendors, and confidence level. Use this at the start of a session to understand the project's stack.
+
 ## Language and Version Awareness
 
-- Ask the student what language they're using (Java, Python, or C++) if not obvious from context
+- The language is **auto-detected** from the project. Only ask the student if detection fails.
 - Default to the current season (2025) unless specified otherwise
-- Use the `language` and `version` parameters to filter results:
+- Override auto-detection when needed:
 ```
-search_frc_docs(query="command based", language="Python", version="2025")
+search_frc_docs(query="command based", language="Python", version="2025", auto_detect=false)
 ```
 
 ## Code Style for FRC
