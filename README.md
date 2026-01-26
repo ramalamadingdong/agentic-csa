@@ -30,7 +30,6 @@ Have you ever spent hours looking for how to configure a SparkMax motor controll
       "command": "uvx",
       "args": ["first-agentic-csa"]
     }
-  }
 ```
 
 6. Save the file and restart VS Code
