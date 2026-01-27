@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [master, main]
+    branches: [main, dev]
   pull_request:
-    branches: [master, main]
+    branches: [main, dev]
 
 jobs:
   test:
@@ -50,4 +50,3 @@ jobs:
         with:
           name: dist
           path: dist/
-

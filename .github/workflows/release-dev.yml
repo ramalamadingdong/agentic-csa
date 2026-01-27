@@ -1,0 +1,100 @@
+name: Release Dev
+
+# Publishes the dev package to PyPI when changes land on the dev branch.
+# This can be triggered automatically on push or manually.
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - "src/**"
+      - "pyproject.toml"
+      - "server.json"
+  workflow_dispatch:
+    inputs:
+      bump_type:
+        description: "Dev version bump type"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev  # Increment dev number (e.g. 0.4.0.dev1 -> 0.4.0.dev2)
+
+jobs:
+  release-dev:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    environment: pypi-dev
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: "latest"
+
+      - name: Verify dev package name
+        run: |
+          NAME=$(grep -oP '^name = "\K[^"]+' pyproject.toml)
+          if [ "$NAME" != "first-agentic-csa-dev" ]; then
+            echo "ERROR: Dev branch must use package name 'first-agentic-csa-dev', got '$NAME'"
+            exit 1
+          fi
+
+      - name: Bump dev version
+        id: version
+        run: |
+          CURRENT=$(grep -oP '^version = "\K[^"]+' pyproject.toml)
+          echo "current=$CURRENT" >> $GITHUB_OUTPUT
+
+          # Extract dev number and increment
+          if [[ "$CURRENT" =~ \.dev([0-9]+)$ ]]; then
+            BASE=${CURRENT%.dev*}
+            DEV_NUM=${BASH_REMATCH[1]}
+            NEW="${BASE}.dev$((DEV_NUM + 1))"
+          else
+            # Not a dev version yet, append .dev1
+            NEW="${CURRENT}.dev1"
+          fi
+
+          echo "new=$NEW" >> $GITHUB_OUTPUT
+          echo "Bumping $CURRENT -> $NEW"
+
+      - name: Update version files
+        run: |
+          NEW="${{ steps.version.outputs.new }}"
+          sed -i 's/^version = ".*"/version = "'"$NEW"'"/' pyproject.toml
+          jq --arg v "$NEW" '.version = $v' server.json > tmp.json
+          mv tmp.json server.json
+
+      - name: Commit version bump
+        run: |
+          git add pyproject.toml server.json
+          git diff --cached --quiet && echo "No version change" && exit 0
+          git commit -m "chore(dev): bump dev version to ${{ steps.version.outputs.new }}"
+          git push
+
+      - name: Run tests
+        run: |
+          uv sync --all-extras
+          uv run pytest tests/ -v
+
+      - name: Build and publish to PyPI
+        run: |
+          uv build
+          uv publish --trusted-publishing always
+
+      - name: Create dev pre-release tag
+        run: |
+          git tag "v${{ steps.version.outputs.new }}"
+          git push --tags
