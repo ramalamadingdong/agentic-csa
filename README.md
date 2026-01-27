@@ -28,7 +28,7 @@ Have you ever spent hours looking for how to configure a SparkMax motor controll
 ```json
     "frc-docs": {
       "command": "uvx",
-      "args": ["first-agentic-csa"]
+      "args": ["first-agentic-csa-dev"]
     }
   }
 ```

@@ -1,6 +1,6 @@
 [project]
-name = "first-agentic-csa"
-version = "0.3.12"
+name = "first-agentic-csa-dev"
+version = "0.4.0.dev1"
 description = "Plugin-based FRC documentation agent as an MCP server for WPILib and vendor libraries"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -32,7 +32,7 @@ dev = [
 ]
 
 [project.scripts]
-first-agentic-csa = "wpilib_mcp.server:main"
+first-agentic-csa-dev = "wpilib_mcp.server:main"
 
 [build-system]
 requires = ["hatchling"]
