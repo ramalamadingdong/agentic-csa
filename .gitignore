@@ -3,6 +3,8 @@ __pycache__/
 *.py[codz]
 *$py.class
 
+.claude
+
 # C extensions
 *.so
 
@@ -216,3 +218,5 @@ __marimo__/
 .streamlit/secrets.toml
 
 *.pyc
+
+tmpclaude*

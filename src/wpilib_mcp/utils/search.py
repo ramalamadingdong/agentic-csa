@@ -28,7 +28,7 @@ FRC_PRESERVED_TERMS = {
 # FRC synonym dictionary for query expansion
 FRC_SYNONYMS = {
     # Motor controllers
-    "motor controller": ["sparkmax", "spark max", "talonfx", "talon fx", "spark flex", "sparkflex"],
+    "motor controller": ["sparkmax", "spark max", "talonfx", "talon fx", "spark flex", "sparkflex", "talon fxs", "kraken"],
     "sparkmax": ["spark max", "motor controller", "rev motor controller"],
     "spark max": ["sparkmax", "motor controller", "rev motor controller"],
     "talonfx": ["talon fx", "motor controller", "ctre motor controller", "falcon"],
