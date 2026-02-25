@@ -16,6 +16,7 @@ from ..base import (
 )
 from ...utils.fetch import HttpFetcher
 from ...utils.html import HtmlCleaner
+from ...utils.markdown import extract_md_title
 from ...utils.search import BM25SearchIndex
 
 
@@ -192,22 +193,40 @@ class Plugin(PluginBase):
         
         return results
     
+    def _to_md_url(self, url: str) -> str:
+        """Convert a page URL to its .md source URL."""
+        if url.endswith(".md"):
+            return url
+        return url.rstrip("/") + ".md"
+
     async def fetch_page(self, url: str) -> Optional[PageContent]:
-        """Fetch and clean a REV documentation page."""
+        """Fetch a REV documentation page, preferring .md source over HTML."""
         if self._fetcher is None:
             return None
-        
+
+        page_info = self._find_page_by_url(url)
+
+        # Try .md source first
         try:
-            # Fetch HTML
+            markdown = await self._fetcher.fetch(self._to_md_url(url))
+            title = extract_md_title(markdown) or "REV Robotics Documentation"
+            return PageContent(
+                url=url,
+                title=title,
+                content=markdown,
+                vendor=self.display_name,
+                language=page_info.language if page_info else None,
+                section=page_info.section if page_info else None,
+                last_fetched=datetime.now().isoformat()
+            )
+        except Exception:
+            pass
+
+        # Fall back to HTML
+        try:
             html = await self._fetcher.fetch(url)
-            
-            # Extract content
             content = self._html_cleaner.extract_content(html, url)
             title = self._html_cleaner.extract_title(html) or "REV Robotics Documentation"
-            
-            # Try to find page in index for metadata
-            page_info = self._find_page_by_url(url)
-            
             return PageContent(
                 url=url,
                 title=title,
@@ -217,7 +236,6 @@ class Plugin(PluginBase):
                 section=page_info.section if page_info else None,
                 last_fetched=datetime.now().isoformat()
             )
-            
         except Exception as e:
             logger.error(f"Error fetching page {url}: {e}")
             return None
