@@ -57,9 +57,14 @@ jobs:
 
       - name: Commit and tag
         run: |
+          NEW_TAG="v${{ steps.version.outputs.new }}"
+          if git rev-parse "$NEW_TAG" >/dev/null 2>&1; then
+            echo "Error: tag '$NEW_TAG' already exists. Delete it first or choose a different bump type."
+            exit 1
+          fi
           git add pyproject.toml server.json
           git commit -m "chore: bump version to ${{ steps.version.outputs.new }}"
-          git tag "v${{ steps.version.outputs.new }}"
+          git tag "$NEW_TAG"
           git push && git push --tags
 
       - name: Create GitHub Release
