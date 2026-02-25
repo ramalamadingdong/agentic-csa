@@ -26,6 +26,7 @@ from .tool_router import (
     format_page_content,
     format_sections
 )
+from .utils.context import get_project_context, ProjectContext
 
 
 # Configure logging
@@ -56,8 +57,8 @@ def create_server() -> Server:
                 description=(
                     "Search FRC documentation across WPILib and vendor libraries "
                     "(REV, CTRE, Redux, etc.). Returns ranked results with titles, "
-                    "URLs, and content previews. Use vendors=['all'] for cross-vendor "
-                    "queries, or specify vendors to narrow search."
+                    "URLs, and content previews. Use auto_detect=true to automatically "
+                    "filter by the project's detected language and vendors."
                 ),
                 inputSchema={
                     "type": "object",
@@ -70,7 +71,7 @@ def create_server() -> Server:
                             "type": "array",
                             "items": {"type": "string"},
                             "default": ["all"],
-                            "description": "Vendors to search: ['all'] or specific like ['wpilib', 'rev', 'ctre']"
+                            "description": "Vendors to search: ['all'] or specific like ['wpilib', 'rev', 'ctre']. Ignored if auto_detect=true."
                         },
                         "version": {
                             "type": "string",
@@ -80,8 +81,7 @@ def create_server() -> Server:
                         "language": {
                             "type": "string",
                             "enum": ["Java", "Python", "C++"],
-                            "default": "Java",
-                            "description": "Programming language filter"
+                            "description": "Programming language filter. Auto-detected if auto_detect=true."
                         },
                         "max_results": {
                             "type": "integer",
@@ -89,9 +89,31 @@ def create_server() -> Server:
                             "maximum": 25,
                             "default": 10,
                             "description": "Maximum results (fewer for quick lookups, more for research)"
+                        },
+                        "auto_detect": {
+                            "type": "boolean",
+                            "default": True,
+                            "description": "Auto-detect language and vendors from project files. Recommended for better results."
                         }
                     },
                     "required": ["query"]
+                }
+            ),
+            Tool(
+                name="detect_project_context",
+                description=(
+                    "Detect the FRC project's programming language and vendor libraries "
+                    "by scanning source files, build configs, and vendordeps. "
+                    "Useful for understanding what hardware/libraries the project uses."
+                ),
+                inputSchema={
+                    "type": "object",
+                    "properties": {
+                        "project_path": {
+                            "type": "string",
+                            "description": "Path to project root. Defaults to current working directory."
+                        }
+                    }
                 }
             ),
             Tool(
@@ -161,6 +183,8 @@ def create_server() -> Server:
                 return await handle_fetch(arguments)
             elif name == "list_frc_doc_sections":
                 return await handle_list_sections(arguments)
+            elif name == "detect_project_context":
+                return await handle_detect_context(arguments)
             else:
                 return [TextContent(
                     type="text",
@@ -179,27 +203,56 @@ def create_server() -> Server:
 async def handle_search(arguments: dict) -> list[TextContent]:
     """Handle search_frc_docs tool call."""
     global _router, _config
-    
+
     query = arguments.get("query", "")
     if not query:
         return [TextContent(type="text", text="Error: query is required")]
-    
+
     # Get defaults from config
     search_config = _config.get("search", {})
-    
+
+    # Check if auto_detect is enabled (default: True)
+    auto_detect = arguments.get("auto_detect", True)
+
+    # Start with provided or default values
     vendors = arguments.get("vendors", ["all"])
     version = arguments.get("version", search_config.get("default_version", "2025"))
-    language = arguments.get("language", search_config.get("default_language", "Java"))
+    language = arguments.get("language")  # None if not provided
     max_results = arguments.get("max_results", search_config.get("default_max_results", 10))
-    
+
+    # Auto-detect context if enabled
+    context_info = ""
+    if auto_detect:
+        try:
+            context = get_project_context()
+            if context.has_context:
+                # Use detected language if not explicitly provided
+                if language is None and context.language:
+                    language = context.language
+                    context_info += f"[Auto-detected language: {language}] "
+
+                # Use detected vendors if vendors is "all"
+                if (vendors == ["all"] or "all" in vendors) and context.vendors:
+                    # Always include wpilib plus detected vendors
+                    vendors = list(set(["wpilib"] + context.vendors))
+                    context_info += f"[Auto-detected vendors: {', '.join(context.vendors)}] "
+
+                logger.info(f"Context detection: {context.to_dict()}")
+        except Exception as e:
+            logger.warning(f"Context detection failed: {e}")
+
+    # Fall back to config defaults if still not set
+    if language is None:
+        language = search_config.get("default_language", "Java")
+
     # Clamp max_results
     max_results = max(1, min(25, max_results))
-    
+
     logger.info(
         f"Search: query={query!r}, vendors={vendors}, "
         f"version={version}, language={language}, max={max_results}"
     )
-    
+
     results = await _router.search(
         query=query,
         vendors=vendors,
@@ -207,9 +260,58 @@ async def handle_search(arguments: dict) -> list[TextContent]:
         language=language,
         max_results=max_results
     )
-    
+
+    # Prepend context info if we auto-detected
     formatted = format_search_results(results)
+    if context_info:
+        formatted = f"{context_info}\n\n{formatted}"
+
     return [TextContent(type="text", text=formatted)]
+
+
+async def handle_detect_context(arguments: dict) -> list[TextContent]:
+    """Handle detect_project_context tool call."""
+    from pathlib import Path
+
+    project_path = arguments.get("project_path")
+    path = Path(project_path) if project_path else None
+
+    try:
+        context = get_project_context(path)
+
+        lines = ["# Project Context Detection\n"]
+
+        if not context.has_context:
+            lines.append("**No FRC project context detected.**\n")
+            lines.append("This might mean:")
+            lines.append("- Not running from an FRC project directory")
+            lines.append("- Project doesn't have standard FRC structure")
+            lines.append("- Missing vendordeps or source files\n")
+        else:
+            if context.language:
+                lines.append(f"**Language:** {context.language}")
+
+            if context.vendors:
+                lines.append(f"**Vendors:** {', '.join(context.vendors)}")
+
+            lines.append(f"**Confidence:** {context.confidence:.0%}")
+
+            if context.detection_sources:
+                lines.append("\n**Detection sources:**")
+                for source in context.detection_sources[:10]:
+                    lines.append(f"  - {source}")
+
+        lines.append("\n---")
+        lines.append("*Use this information to filter search results appropriately.*")
+
+        return [TextContent(type="text", text="\n".join(lines))]
+
+    except Exception as e:
+        logger.error(f"Context detection error: {e}", exc_info=True)
+        return [TextContent(
+            type="text",
+            text=f"Error detecting project context: {str(e)}"
+        )]
 
 
 async def handle_fetch(arguments: dict) -> list[TextContent]:

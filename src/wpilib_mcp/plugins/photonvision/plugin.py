@@ -16,6 +16,7 @@ from ..base import (
 )
 from ...utils.fetch import HttpFetcher
 from ...utils.html import HtmlCleaner
+from ...utils.markdown import extract_md_title
 from ...utils.search import BM25SearchIndex
 
 
@@ -191,22 +192,53 @@ class Plugin(PluginBase):
         
         return results
     
+    def _to_sources_url(self, url: str) -> str:
+        """Convert a page URL to its Sphinx _sources .md.txt URL."""
+        from urllib.parse import urlparse
+        parsed = urlparse(url)
+        path = parsed.path
+        marker = "/en/latest/"
+        if marker not in path:
+            return ""
+        prefix, rest = path.split(marker, 1)
+        rest = rest.rstrip("/")
+        if rest.endswith(".html"):
+            rest = rest[:-5]
+        elif not rest:
+            rest = "index"
+        sources_path = f"{prefix}{marker}_sources/{rest}.md.txt"
+        return parsed._replace(path=sources_path).geturl()
+
     async def fetch_page(self, url: str) -> Optional[PageContent]:
-        """Fetch and clean a PhotonVision documentation page."""
+        """Fetch a PhotonVision page, preferring _sources/*.md.txt over HTML."""
         if self._fetcher is None:
             return None
-        
+
+        page_info = self._find_page_by_url(url)
+
+        # Try Sphinx markdown source first
+        sources_url = self._to_sources_url(url)
+        if sources_url:
+            try:
+                markdown = await self._fetcher.fetch(sources_url)
+                title = extract_md_title(markdown) or "PhotonVision Documentation"
+                return PageContent(
+                    url=url,
+                    title=title,
+                    content=markdown,
+                    vendor=self.display_name,
+                    language=page_info.language if page_info else None,
+                    section=page_info.section if page_info else None,
+                    last_fetched=datetime.now().isoformat()
+                )
+            except Exception:
+                pass
+
+        # Fall back to HTML
         try:
-            # Fetch HTML
             html = await self._fetcher.fetch(url)
-            
-            # Extract content
             content = self._html_cleaner.extract_content(html, url)
             title = self._html_cleaner.extract_title(html) or "PhotonVision Documentation"
-            
-            # Try to find page in index for metadata
-            page_info = self._find_page_by_url(url)
-            
             return PageContent(
                 url=url,
                 title=title,
@@ -216,7 +248,6 @@ class Plugin(PluginBase):
                 section=page_info.section if page_info else None,
                 last_fetched=datetime.now().isoformat()
             )
-            
         except Exception as e:
             logger.error(f"Error fetching page {url}: {e}")
             return None
