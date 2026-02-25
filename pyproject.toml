@@ -33,6 +33,8 @@ dev = [
 
 [project.scripts]
 first-agentic-csa = "wpilib_mcp.server:main"
+first-agentic-csa-dev = "wpilib_mcp.server:main"
+first_agentic_csa_dev = "wpilib_mcp.server:main"
 
 [build-system]
 requires = ["hatchling"]
