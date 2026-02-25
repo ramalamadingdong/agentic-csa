@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.wpilib.org)",
+      "WebFetch(domain:docs.revrobotics.com)",
+      "WebFetch(domain:v6.docs.ctr-electronics.com)",
+      "WebFetch(domain:docs.photonvision.org)",
+      "WebFetch(domain:docs.reduxrobotics.com)",
+      "Bash(uv run pytest:*)",
+      "Bash(uv run:*)"
+    ]
+  }
+}
