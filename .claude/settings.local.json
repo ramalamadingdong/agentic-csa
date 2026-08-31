@@ -7,7 +7,12 @@
       "WebFetch(domain:docs.photonvision.org)",
       "WebFetch(domain:docs.reduxrobotics.com)",
       "Bash(uv run pytest:*)",
-      "Bash(uv run:*)"
+      "Bash(uv run:*)",
+      "Bash(python3 -c ' *)",
+      "WebFetch(domain:docs.yagsl.com)",
+      "WebFetch(domain:docs.advantagekit.org)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:yagsl.gitbook.io)"
     ]
   }
 }

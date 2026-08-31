@@ -20,6 +20,18 @@
     "photonvision": {
       "enabled": true,
       "languages": ["Java", "C++", "Python"]
+    },
+    "yagsl": {
+      "enabled": true,
+      "languages": ["Java"]
+    },
+    "yams": {
+      "enabled": true,
+      "languages": ["Java"]
+    },
+    "advantagekit": {
+      "enabled": true,
+      "languages": ["Java"]
     }
   },
   "cache": {
